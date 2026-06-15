@@ -23,7 +23,7 @@
       --panel-2: #1f1530;
       --ink: #f6f0e3;
       --muted: #b8abce;
-      --faint: #82749b;
+      --faint: #9b8db4;
       --green: #54c79a;
       --border: #2a1f3e;
       --border-2: #3d2c57;
@@ -102,6 +102,7 @@
       background: linear-gradient(96deg, var(--gold) 0%, var(--cream) 42%, var(--blue) 100%);
       -webkit-background-clip: text; background-clip: text; color: transparent;
     }
+    .hero h1 span { display: block; }
     .hero p.lead { margin: 18px auto 0; max-width: 640px; color: var(--muted); font-size: 17.5px; }
     .cta-row { display: flex; gap: 12px; justify-content: center; margin-top: 28px; flex-wrap: wrap; }
     .cta { display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; border-radius: 12px; font-weight: 700; font-size: 14.5px; cursor: pointer; transition: transform .15s, box-shadow .2s, background .2s; }
@@ -205,10 +206,47 @@
     .foot-bottom { text-align: center; color: var(--faint); font-size: 12.5px; padding: 18px; border-top: 1px solid var(--border); }
     .foot-bottom .heart { color: var(--gold); }
 
+    /* copy button + toast */
+    .copy { position: relative; cursor: pointer; width: 100%; text-align: left; appearance: none;
+      padding-right: 64px; transition: border-color .15s; }
+    .copy:hover { border-color: var(--gold); }
+    .copy .cbtn { position: absolute; top: 50%; right: 8px; transform: translateY(-50%); font-family: var(--body);
+      font-size: 11px; font-weight: 700; padding: 4px 9px; border-radius: 6px; background: rgba(255,181,17,0.14);
+      color: var(--gold-soft); border: 1px solid rgba(255,181,17,0.3); pointer-events: none; }
+    .copy.copied .cbtn { background: rgba(84,199,154,0.18); color: var(--green); border-color: rgba(84,199,154,0.4); }
+    #toast { position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%) translateY(20px); z-index: 60;
+      background: var(--panel-2); border: 1px solid var(--green); color: var(--ink); padding: 11px 18px; border-radius: 11px;
+      font-size: 13.5px; font-weight: 600; box-shadow: var(--shadow); opacity: 0; transition: opacity .25s, transform .25s; pointer-events: none; }
+    #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
     /* reveal */
     .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
     .reveal.in { opacity: 1; transform: none; }
     @media (prefers-reduced-motion: reduce) { * { animation: none !important; } .reveal { opacity: 1; transform: none; } }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 760px) {
+      .topbar { flex-wrap: wrap; gap: 12px; padding: 11px 16px; }
+      .brand { order: 1; }
+      .node-chip { order: 2; margin-left: auto; }
+      .search { order: 3; flex-basis: 100%; max-width: none; }
+      .hero { padding: 56px 18px 48px; }
+      .hero img.logo { height: 50px; }
+      .hero h1 { font-size: 30px; }
+      .hero h1 span { display: inline; }
+      .hero p.lead { font-size: 16px; }
+      .cta-row { gap: 10px; }
+      .cta { padding: 11px 18px; }
+      .shell { padding: 24px 16px 48px; gap: 20px; }
+      .why, .band-inner { padding-left: 16px; padding-right: 16px; }
+      .foot-in { padding: 32px 16px 22px; gap: 24px; }
+      .foot-cols { gap: 32px; }
+    }
+    @media (max-width: 460px) {
+      .node-chip { display: none; }
+      .cta-row { flex-direction: column; }
+      .cta { width: 100%; justify-content: center; }
+    }
   </style>
 </head>
 <body>
@@ -220,8 +258,8 @@
       <span class="sub">Community Marketplace</span>
     </div>
     <div class="search">
-      <span class="ic">⌕</span>
-      <input id="search" type="search" placeholder="Search apps — Nostr, Lightning, media…" autocomplete="off" />
+      <span class="ic" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+      <input id="search" type="search" placeholder="Search apps — Nostr, Lightning, media…" autocomplete="off" aria-label="Search apps" />
     </div>
     <div class="node-chip"><span class="dot"></span> Your node, your rules</div>
   </div>
@@ -232,17 +270,17 @@
     <div class="stars" id="stars"></div>
     <div class="hero-in">
       <img class="logo" src="assets/logo-colored.svg" alt="Island Bitcoin" />
-      <h1>Island Bitcoin<br>Community Marketplace</h1>
+      <h1><span>Island Bitcoin</span> <span>Community Marketplace</span></h1>
       <p class="lead">A sovereign, privacy-first bazaar of self-hosted apps for <strong>Umbrel</strong> and <strong>Start9</strong>. No middlemen, no surveillance — your keys, your node, your relays.</p>
       <div class="cta-row">
-        <a class="cta primary" href="#browse">⚡ Browse apps</a>
+        <a class="cta primary" href="#browse"><span aria-hidden="true">⚡</span> Browse apps</a>
         <a class="cta secondary" href="#install">Add to your node</a>
       </div>
       <div class="trust">
-        <span class="t">🔑 Self-custodial</span>
-        <span class="t">🧅 Privacy-first</span>
-        <span class="t">📖 Open source</span>
-        <span class="t">⚡ Lightning-native</span>
+        <span class="t"><span aria-hidden="true">🔑</span> Self-custodial</span>
+        <span class="t"><span aria-hidden="true">🧅</span> Privacy-first</span>
+        <span class="t"><span aria-hidden="true">📖</span> Open source</span>
+        <span class="t"><span aria-hidden="true">⚡</span> Lightning-native</span>
       </div>
     </div>
   </section>
@@ -266,10 +304,6 @@
         <label class="opt"><input type="checkbox" class="f-tag" value="Lightning" /> Lightning</label>
         <label class="opt"><input type="checkbox" class="f-tag" value="Bundled relay" /> Bundled relay</label>
       </div>
-      <div class="filter">
-        <h4>Price</h4>
-        <label class="opt"><input type="checkbox" class="f-price" value="free" /> Free <span class="count">— all apps</span></label>
-      </div>
       <button class="clearbtn" id="clear">Clear all filters</button>
     </aside>
 
@@ -287,35 +321,35 @@
     <h2>Built for sovereignty</h2>
     <p class="sub">Every app in the marketplace runs on hardware you control.</p>
     <div class="features">
-      <div class="feature"><div class="fi">🔑</div><h3>Your keys</h3><p>Keys are generated and held on your node — never uploaded, never escrowed. Non-custodial by default.</p></div>
-      <div class="feature"><div class="fi">🧅</div><h3>Private by design</h3><p>No analytics, no trackers, no accounts. Self-hosted on your own box, reachable on your terms.</p></div>
-      <div class="feature"><div class="fi">⚡</div><h3>Lightning-native</h3><p>Settle in sats over Lightning. Connect your own wallet via NWC — value flows peer-to-peer.</p></div>
-      <div class="feature"><div class="fi">📖</div><h3>Open source</h3><p>Every package is auditable and reproducible. Inspect the source, build it yourself, trust nothing blindly.</p></div>
+      <div class="feature"><div class="fi" aria-hidden="true">🔑</div><h3>Your keys</h3><p>Keys are generated and held on your node — never uploaded, never escrowed. Non-custodial by default.</p></div>
+      <div class="feature"><div class="fi" aria-hidden="true">🧅</div><h3>Private by design</h3><p>No analytics, no trackers, no accounts. Self-hosted on your own box, reachable on your terms.</p></div>
+      <div class="feature"><div class="fi" aria-hidden="true">⚡</div><h3>Lightning-native</h3><p>Settle in sats over Lightning. Connect your own wallet via NWC — value flows peer-to-peer.</p></div>
+      <div class="feature"><div class="fi" aria-hidden="true">📖</div><h3>Open source</h3><p>Every package is auditable and reproducible. Inspect the source, build it yourself, trust nothing blindly.</p></div>
     </div>
   </section>
 
   <!-- Install band -->
   <div class="band" id="install">
-    <h2>Install in two clicks</h2>
-    <p class="sub">Add the Island Bitcoin marketplace to your node, then install any app.</p>
+    <h2>Add the store, then install</h2>
+    <p class="sub">Add the Island Bitcoin marketplace to your node once — every app appears inside.</p>
     <div class="band-inner">
       <div class="install-card">
-        <h3>🟣 Umbrel</h3>
+        <h3><span aria-hidden="true">🟣</span> Umbrel</h3>
         <ol>
           <li>App Store → ⋯ → <strong>Add community store</strong></li>
-          <li>Paste the store URL below</li>
+          <li>Paste the store URL (click to copy)</li>
           <li>Install any Island Bitcoin app</li>
         </ol>
-        <span class="copy">https://github.com/islandbitcoin/atoll-store</span>
+        <button class="copy" type="button" data-copy="https://github.com/islandbitcoin/atoll-store">https://github.com/islandbitcoin/atoll-store<span class="cbtn">Copy</span></button>
       </div>
       <div class="install-card">
-        <h3>🔵 Start9</h3>
+        <h3><span aria-hidden="true">🔵</span> Start9</h3>
         <ol>
           <li>System → Marketplace → <strong>Add custom registry</strong></li>
-          <li>Paste the registry URL below</li>
+          <li>Paste the registry URL (click to copy)</li>
           <li>Install any Island Bitcoin app</li>
         </ol>
-        <span class="copy">https://start9.bobodread.com</span>
+        <button class="copy" type="button" data-copy="https://start9.bobodread.com">https://start9.bobodread.com<span class="cbtn">Copy</span></button>
       </div>
     </div>
   </div>
@@ -350,6 +384,8 @@
     <div class="foot-bottom">© Island Bitcoin · Open-sourced with <span class="heart">♥</span> · One Love.</div>
   </footer>
 
+  <div id="toast" role="status" aria-live="polite"></div>
+
   <script>
     // sparkle field
     (function () {
@@ -368,7 +404,7 @@
     })();
 
     const APPS = [
-      { name: "Pact", id: "atoll-pactd", icon: "assets/icons/pact.svg", category: "Networking", featured: true,
+      { name: "Pact", id: "atoll-pactd", icon: "assets/icons/pact.svg", category: "Networking",
         platforms: ["umbrel", "start9"], tags: ["Nostr", "Lightning", "Non-custodial", "Bundled relay"],
         desc: "Sovereign agent relationship bonds over Nostr & Lightning. Portable, mutually-consented, signed bonds between AI agents — settled in sats.",
         umbrel: "https://github.com/islandbitcoin/atoll-store/tree/main/atoll-pactd", source: "https://github.com/bobodread876/pact" },
@@ -378,7 +414,7 @@
         umbrel: "https://github.com/islandbitcoin/atoll-store/tree/main/atoll-kathreftestr", source: "https://github.com/bobodread876/kathreftestr" }
     ];
 
-    const state = { search: "", category: "All", plats: new Set(), tags: new Set(), free: false };
+    const state = { search: "", category: "All", plats: new Set(), tags: new Set() };
     const categories = ["All", ...Array.from(new Set(APPS.map(a => a.category)))];
 
     const catFilters = document.getElementById("cat-filters");
@@ -400,9 +436,8 @@
     document.getElementById("search").addEventListener("input", e => { state.search = e.target.value.toLowerCase().trim(); render(); });
     document.querySelectorAll(".f-plat").forEach(c => c.onchange = () => { c.checked ? state.plats.add(c.value) : state.plats.delete(c.value); render(); });
     document.querySelectorAll(".f-tag").forEach(c => c.onchange = () => { c.checked ? state.tags.add(c.value) : state.tags.delete(c.value); render(); });
-    document.querySelector(".f-price").onchange = e => { state.free = e.target.checked; render(); };
     document.getElementById("clear").onclick = () => {
-      state.search = ""; state.category = "All"; state.plats.clear(); state.tags.clear(); state.free = false;
+      state.search = ""; state.category = "All"; state.plats.clear(); state.tags.clear();
       document.getElementById("search").value = "";
       document.querySelectorAll(".sidebar input").forEach(i => i.checked = false);
       syncCatButtons(); render();
@@ -430,20 +465,38 @@
         const el = document.createElement("article");
         el.className = "product";
         el.innerHTML = `
-          ${a.featured ? '<span class="feat">✦ Featured</span>' : ''}
           <div class="top"><div class="icon"><img src="${a.icon}" alt="${a.name} icon" loading="lazy"></div><div><h3>${a.name}</h3><span class="pid">${a.id}</span></div></div>
           <p class="desc">${a.desc}</p>
           <div class="tags">${tags}</div>
           <div class="plats">${plats}</div>
-          <div class="price">⚡ Free · self-hosted</div>
+          <div class="price"><span aria-hidden="true">⚡</span> Free · self-hosted</div>
           <div class="actions">
-            <a class="btn primary" href="${a.umbrel}" target="_blank" rel="noopener">Get app</a>
+            <a class="btn primary" href="#install">Install</a>
             <a class="btn ghost" href="${a.source}" target="_blank" rel="noopener">Source</a>
           </div>`;
         grid.appendChild(el);
       });
     }
     render();
+
+    // copy-to-clipboard for store URLs
+    const toast = document.getElementById("toast");
+    let toastTimer;
+    function showToast(msg) {
+      toast.textContent = msg; toast.classList.add("show");
+      clearTimeout(toastTimer); toastTimer = setTimeout(() => toast.classList.remove("show"), 1800);
+    }
+    document.querySelectorAll(".copy").forEach(btn => {
+      btn.addEventListener("click", async () => {
+        const url = btn.getAttribute("data-copy");
+        try { await navigator.clipboard.writeText(url); }
+        catch (e) { const r = document.createRange(); r.selectNodeContents(btn); const s = getSelection(); s.removeAllRanges(); s.addRange(r); document.execCommand("copy"); s.removeAllRanges(); }
+        const chip = btn.querySelector(".cbtn"); const prev = chip.textContent;
+        btn.classList.add("copied"); chip.textContent = "Copied!";
+        showToast("Copied: " + url);
+        setTimeout(() => { btn.classList.remove("copied"); chip.textContent = prev; }, 1600);
+      });
+    });
 
     // scroll reveal
     const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: 0.12 });
