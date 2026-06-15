@@ -13,7 +13,7 @@ It currently lives at `~/Repos/atoll-store` and will be added here as a git subm
 
 ## Add the store to Umbrel
 
-App Store → ⋯ → Add community store → `https://github.com/bobodread876/atoll-store`
+App Store → ⋯ → Add community store → `https://github.com/islandbitcoin/atoll-store`
 
 > The former per-app store repos (`pact-umbrel-store`, `kathreftestr-umbrel-store`) are
 > superseded by `atoll-store` and kept only for reference.
