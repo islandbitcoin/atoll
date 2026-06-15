@@ -4,3 +4,6 @@
 [submodule "packages/kathreftestr-startos"]
 	path = packages/kathreftestr-startos
 	url = https://github.com/bobodread876/kathreftestr-startos.git
+[submodule "umbrel/atoll-store"]
+	path = umbrel/atoll-store
+	url = https://github.com/islandbitcoin/atoll-store.git
