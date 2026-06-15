@@ -1,0 +1,6 @@
+[submodule "packages/pact-startos"]
+	path = packages/pact-startos
+	url = https://github.com/bobodread876/pact-startos.git
+[submodule "packages/kathreftestr-startos"]
+	path = packages/kathreftestr-startos
+	url = https://github.com/bobodread876/kathreftestr-startos.git
