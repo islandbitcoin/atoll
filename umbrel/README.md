@@ -1,31 +1,19 @@
-# Umbrel community store (placeholder)
+# Umbrel community store
 
-This directory will hold the **single, multi-app** Umbrel community store
-(`bobodread-umbrel-store`) — added here as a submodule once it is created.
+The single, multi-app Umbrel community store lives in its own repo, **`atoll-store`**
+(store `id: atoll`, display name **Island Bitcoin**), so Umbrel can consume it by git URL.
 
-## Why consolidate
+It currently lives at `~/Repos/atoll-store` and will be added here as a git submodule
+(`umbrel/atoll-store`) once it is pushed to GitHub.
 
-An Umbrel community store repo is natively multi-app: one `umbrel-app-store.yml` at the root,
-plus one subfolder per app. The current setup uses a separate repo per app
-(`pact-umbrel-store`, `kathreftestr-umbrel-store`), which fights that model. Collapsing them
-into one store means users add a single store URL and get every app.
+## Apps
 
-## Target structure
+- `atoll-pactd` — Pact (migrated from `pact-umbrel-store/pact-pactd`)
+- `atoll-kathreftestr` — Kathreftestr (migrated from `kathreftestr-umbrel-store/kathreftestr`)
 
-```
-bobodread-umbrel-store/
-├── umbrel-app-store.yml      # id: bobodread, name: BoboDread
-├── bobodread-pactd/          # migrated from pact-umbrel-store/pact-pactd
-│   ├── umbrel-app.yml         # id: bobodread-pactd  (must match folder name)
-│   ├── docker-compose.yml
-│   └── icon.svg
-└── bobodread-kathreftestr/   # migrated from kathreftestr-umbrel-store/kathreftestr
-    ├── umbrel-app.yml         # id: bobodread-kathreftestr
-    ├── docker-compose.yml
-    └── icon.svg
-```
+## Add the store to Umbrel
 
-## Migration note
+App Store → ⋯ → Add community store → `https://github.com/bobodread876/atoll-store`
 
-Folder names and the `id:` field in each `umbrel-app.yml` must be re-prefixed with the new
-store id (`bobodread`). Done as a separate task — see the project memory.
+> The former per-app store repos (`pact-umbrel-store`, `kathreftestr-umbrel-store`) are
+> superseded by `atoll-store` and kept only for reference.

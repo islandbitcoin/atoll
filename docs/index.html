@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Island Bitcoin — App Store</title>
+  <meta name="description" content="Island Bitcoin's self-hosted apps for Umbrel and Start9 — sovereign agent bonds, Nostr livestreaming, and more." />
+  <style>
+    :root {
+      --bg: #0a0f1c;
+      --panel: #111a2e;
+      --panel-2: #16213c;
+      --ink: #eaf1ff;
+      --muted: #9fb2d4;
+      --accent: #f7931a;   /* bitcoin orange */
+      --sea: #2bb1c4;      /* island sea */
+      --border: #21304f;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(1200px 600px at 80% -10%, rgba(43,177,196,0.18), transparent 60%),
+        radial-gradient(900px 500px at -10% 10%, rgba(247,147,26,0.12), transparent 55%),
+        var(--bg);
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap { max-width: 920px; margin: 0 auto; padding: 0 20px; }
+    header { padding: 72px 0 32px; text-align: center; }
+    .logo { font-size: 44px; letter-spacing: -0.02em; margin: 0; font-weight: 800; }
+    .logo .o { color: var(--accent); }
+    .tag { color: var(--muted); font-size: 18px; margin: 12px 0 0; }
+    .pill {
+      display: inline-block; margin-top: 18px; padding: 6px 14px; border-radius: 999px;
+      background: var(--panel-2); border: 1px solid var(--border); color: var(--sea);
+      font-size: 13px; font-weight: 600;
+    }
+    h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 48px 0 16px; }
+    .apps { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 640px) { .apps { grid-template-columns: 1fr; } }
+    .card {
+      background: linear-gradient(180deg, var(--panel), var(--panel-2));
+      border: 1px solid var(--border); border-radius: 16px; padding: 20px;
+    }
+    .card h3 { margin: 0 0 4px; font-size: 20px; }
+    .card .id { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; color: var(--sea); }
+    .card p { color: var(--muted); margin: 10px 0 0; font-size: 14.5px; }
+    .install { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 640px) { .install { grid-template-columns: 1fr; } }
+    .install .card h3 { display: flex; align-items: center; gap: 8px; }
+    .badge { font-size: 11px; padding: 2px 8px; border-radius: 6px; background: rgba(247,147,26,0.15); color: var(--accent); border: 1px solid rgba(247,147,26,0.3); }
+    .badge.s9 { background: rgba(43,177,196,0.15); color: var(--sea); border-color: rgba(43,177,196,0.3); }
+    ol { margin: 12px 0 0; padding-left: 20px; color: var(--muted); font-size: 14.5px; }
+    code, .copy {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px;
+      background: #0c1424; border: 1px solid var(--border); border-radius: 8px;
+      padding: 10px 12px; display: block; margin-top: 10px; color: var(--ink);
+      word-break: break-all;
+    }
+    footer { color: var(--muted); font-size: 13px; text-align: center; padding: 56px 0 40px; }
+    a { color: var(--sea); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1 class="logo">Island&nbsp;Bitc<span class="o">₿</span>in</h1>
+      <p class="tag">Self-hosted apps for <strong>Umbrel</strong> and <strong>Start9</strong> — your keys, your node, your relays.</p>
+      <span class="pill">store id: atoll</span>
+    </header>
+
+    <h2>Apps</h2>
+    <div class="apps">
+      <div class="card">
+        <h3>Pact</h3>
+        <span class="id">atoll-pactd</span>
+        <p>Sovereign agent relationship bonds over Nostr &amp; Lightning. Portable, mutually-consented, signed bonds between AI agents — settled in sats.</p>
+      </div>
+      <div class="card">
+        <h3>Kathreftestr</h3>
+        <span class="id">atoll-kathreftestr</span>
+        <p>Mirror a livestream to Nostr (NIP-53), with Lightning zaps. Re-broadcast YouTube/Twitch to any Nostr client, self-hosted.</p>
+      </div>
+    </div>
+
+    <h2>Install</h2>
+    <div class="install">
+      <div class="card">
+        <h3>Umbrel <span class="badge">community store</span></h3>
+        <ol>
+          <li>App Store → ⋯ → <strong>Add community store</strong></li>
+          <li>Paste the store URL below</li>
+          <li>Install any Island Bitcoin app</li>
+        </ol>
+        <span class="copy">https://github.com/bobodread876/atoll-store</span>
+      </div>
+      <div class="card">
+        <h3>Start9 <span class="badge s9">marketplace</span></h3>
+        <ol>
+          <li>System → Marketplace → <strong>Add custom registry</strong></li>
+          <li>Paste the registry URL below</li>
+          <li>Install any Island Bitcoin app</li>
+        </ol>
+        <span class="copy">https://start9.bobodread.com</span>
+      </div>
+    </div>
+
+    <footer>
+      Island Bitcoin · built with the <a href="https://github.com/bobodread876/atoll">atoll</a> parent repo<br />
+      Umbrel store: <a href="https://github.com/bobodread876/atoll-store">atoll-store</a> · Start9 registry: start9.bobodread.com
+    </footer>
+  </div>
+</body>
+</html>
