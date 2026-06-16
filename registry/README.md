@@ -50,7 +50,12 @@ public `start9.bobodread.com`.
 | `REGISTRY_HOSTNAME` | `embassy-5004a3db.local` | signing context (must be in `registry-hostname`) |
 | `RELEASE_OWNER` | `islandbitcoin` | GitHub owner that hosts the release assets |
 | `SKIP_BUILD` | _(unset)_ | reuse existing `.s9pk`s instead of `make` |
+| `FORCE` | _(unset)_ | re-publish a version already in the registry (remove + re-add) |
 | `DRY_RUN` | _(unset)_ | print every command without executing |
+
+> By default, any package whose version is **already in the registry is skipped** (no build,
+> no re-upload), so re-running `make publish` only publishes new or version-bumped packages.
+> Set `FORCE=1` to remove and re-add an existing version.
 
 ## Outstanding / nice-to-have
 

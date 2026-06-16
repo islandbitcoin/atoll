@@ -22,7 +22,11 @@
 #   REGISTRY_HOSTNAME=embassy-5004a3db.local      signing context (must be in registry-hostname)
 #   RELEASE_OWNER=islandbitcoin                   GitHub owner (fallback if a dir has no git remote)
 #   SKIP_BUILD=                                    set to skip `make` and use existing s9pks
+#   FORCE=                                         re-publish a version already in the registry (remove + re-add)
 #   DRY_RUN=                                       set to print commands without executing
+#
+# By default, packages whose version is already in the registry are skipped (so re-running
+# only publishes new/bumped versions). Set FORCE=1 to remove+re-add an existing version.
 #
 # Examples:
 #   DRY_RUN=1 ./registry/publish.sh                       # preview everything
@@ -35,6 +39,7 @@ REGISTRY="${REGISTRY:-https://start9.bobodread.com}"
 REGISTRY_HOSTNAME="${REGISTRY_HOSTNAME:-embassy-5004a3db.local}"
 RELEASE_OWNER="${RELEASE_OWNER:-islandbitcoin}"
 SKIP_BUILD="${SKIP_BUILD:-}"
+FORCE="${FORCE:-}"           # set to re-publish a version that's already in the registry
 DRY_RUN="${DRY_RUN:-}"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -94,10 +99,29 @@ fi
 
 log "registry: $REGISTRY  |  signing context: $REGISTRY_HOSTNAME${DRY_RUN:+  (DRY RUN)}"
 
+# Snapshot the current registry index once so we can skip versions already published.
+INDEX_JSON="$(start-cli --registry-hostname "$REGISTRY_HOSTNAME" -r "$REGISTRY" registry package index 2>/dev/null || echo '{}')"
+in_index() { # in_index <id> <version> -> 0 if that version is already in the registry
+  printf '%s' "$INDEX_JSON" | python3 -c 'import json,sys
+try: d = json.load(sys.stdin)
+except Exception: sys.exit(1)
+sys.exit(0 if sys.argv[2] in d.get("packages", {}).get(sys.argv[1], {}).get("versions", {}) else 1)' "$1" "$2"
+}
+
 for dir in "${PKG_DIRS[@]}"; do
   [ -d "$dir" ] || { warn "skipping $dir (not a directory)"; continue; }
   dir="$(cd "$dir" && pwd)"
   log "package: $dir"
+
+  # 0. fast skip: if we can read a single, already-published version from source, don't even build
+  if [ -z "$FORCE" ]; then
+    src_id="$(grep -oE "id: *'[^']+'" "$dir"/startos/manifest/index.ts 2>/dev/null | head -1 | sed -E "s/.*'([^']+)'.*/\1/")"
+    src_vers="$(grep -rhoE "version: *'[^']+'" "$dir"/startos/versions/*.ts 2>/dev/null | sed -E "s/.*'([^']+)'.*/\1/" | sort -u)"
+    if [ -n "$src_id" ] && [ "$(printf '%s\n' "$src_vers" | grep -c .)" = "1" ] && in_index "$src_id" "$src_vers"; then
+      log "  $src_id@$src_vers already in registry — skipping (FORCE=1 to re-publish)"
+      continue
+    fi
+  fi
 
   # 1. build (unless skipped)
   if [ -z "$SKIP_BUILD" ]; then
@@ -124,6 +148,17 @@ for dir in "${PKG_DIRS[@]}"; do
   [ -n "$notes" ] || notes="$id $version"
 
   log "  id=$id  version=$version  tag=$tag  repo=$repo  archs=${#s9pks[@]}"
+
+  # 2b. skip (or, with FORCE, remove) if this version is already in the registry
+  if in_index "$id" "$version"; then
+    if [ -z "$FORCE" ]; then
+      log "  $id@$version already in registry — skipping publish (FORCE=1 to re-publish)"
+      continue
+    fi
+    log "  $id@$version exists — FORCE set: removing then re-adding"
+    run start-cli --registry-hostname "$REGISTRY_HOSTNAME" -r "$REGISTRY" \
+      registry package remove "$id" "$version"
+  fi
 
   # 3. ensure a GitHub release with these exact s9pks as assets
   if gh release view "$tag" --repo "$repo" >/dev/null 2>&1; then
