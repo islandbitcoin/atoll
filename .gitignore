@@ -1,0 +1,5 @@
+# macOS
+.DS_Store
+
+# Build artifacts (s9pks are large; built per-release, hosted on GitHub Releases)
+*.s9pk
