@@ -100,13 +100,20 @@ fi
 log "registry: $REGISTRY  |  signing context: $REGISTRY_HOSTNAME${DRY_RUN:+  (DRY RUN)}"
 
 # Snapshot the current registry index once so we can skip versions already published.
-INDEX_JSON="$(start-cli --registry-hostname "$REGISTRY_HOSTNAME" -r "$REGISTRY" registry package index 2>/dev/null || echo '{}')"
+INDEX_JSON="$(start-cli --registry-hostname "$REGISTRY_HOSTNAME" -r "$REGISTRY" registry package index 2>/dev/null || true)"
 in_index() { # in_index <id> <version> -> 0 if that version is already in the registry
   printf '%s' "$INDEX_JSON" | python3 -c 'import json,sys
-try: d = json.load(sys.stdin)
+raw = sys.stdin.read(); i = raw.find("{")          # tolerate any leading progress/noise
+if i < 0: sys.exit(1)
+try: d, _ = json.JSONDecoder().raw_decode(raw[i:])  # parse first JSON value, ignore trailing
 except Exception: sys.exit(1)
 sys.exit(0 if sys.argv[2] in d.get("packages", {}).get(sys.argv[1], {}).get("versions", {}) else 1)' "$1" "$2"
 }
+# warn if the index could not be read — skip-detection is then OFF (FORCE still works)
+if ! printf '%s' "$INDEX_JSON" | python3 -c 'import json,sys
+raw=sys.stdin.read(); i=raw.find("{"); sys.exit(1) if i<0 else json.JSONDecoder().raw_decode(raw[i:])' >/dev/null 2>&1; then
+  warn "could not read the registry index — already-published versions will NOT be auto-skipped this run (use FORCE=1 to re-publish existing versions, or check connectivity/auth)"
+fi
 
 for dir in "${PKG_DIRS[@]}"; do
   [ -d "$dir" ] || { warn "skipping $dir (not a directory)"; continue; }
@@ -149,15 +156,14 @@ for dir in "${PKG_DIRS[@]}"; do
 
   log "  id=$id  version=$version  tag=$tag  repo=$repo  archs=${#s9pks[@]}"
 
-  # 2b. skip (or, with FORCE, remove) if this version is already in the registry
-  if in_index "$id" "$version"; then
-    if [ -z "$FORCE" ]; then
-      log "  $id@$version already in registry — skipping publish (FORCE=1 to re-publish)"
-      continue
-    fi
-    log "  $id@$version exists — FORCE set: removing then re-adding"
+  # 2b. with FORCE, always remove first (don't trust the snapshot); else skip if already published
+  if [ -n "$FORCE" ]; then
+    log "  FORCE: removing $id@$version if present, then re-adding"
     run start-cli --registry-hostname "$REGISTRY_HOSTNAME" -r "$REGISTRY" \
-      registry package remove "$id" "$version"
+      registry package remove "$id" "$version" || true
+  elif in_index "$id" "$version"; then
+    log "  $id@$version already in registry — skipping publish (FORCE=1 to re-publish)"
+    continue
   fi
 
   # 3. ensure a GitHub release with these exact s9pks as assets
