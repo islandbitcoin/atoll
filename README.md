@@ -16,7 +16,9 @@ atoll/
 ├── umbrel/        # the single multi-app Umbrel community store (atoll-store)
 ├── packages/      # one StartOS .s9pk builder per app (git submodules)
 │   ├── pact-startos/
-│   └── kathreftestr-startos/
+│   ├── kathreftestr-startos/
+│   ├── maple-proxy-startos/
+│   └── phoenixd-startos/
 ├── registry/      # config + publish scripts for the Start9 Marketplace registry
 ├── Makefile       # build-all / publish-all orchestration
 └── README.md
@@ -48,12 +50,16 @@ Consequence:
 3. **Build & publish**: `make build` produces every `.s9pk`; `make publish` pushes them to
    the registry at `start9.bobodread.com`.
 
-## Status (2026-06-15)
+## Status (2026-06-16) — ✅ live in production
 
 - [x] Parent repo scaffolded
 - [x] Umbrel stores consolidated into the single `atoll-store` (id: atoll, "Island Bitcoin")
 - [x] Landing page added under `docs/`
-- [ ] `atoll-store` pushed to GitHub and wired in as a submodule under `umbrel/`
-- [ ] GitHub Pages enabled (Settings → Pages → main / `docs`)
-- [ ] Start9 registry `start9.bobodread.com` finished (running on Zion, setup incomplete)
-- [ ] `make publish` wired to the registry's publish command
+- [x] `atoll-store` pushed to GitHub and wired in as a submodule under `umbrel/`
+- [x] GitHub Pages enabled — https://islandbitcoin.github.io/atoll/
+- [x] Start9 registry `start9.bobodread.com` live on Zion (end users confirmed installing)
+- [x] `make publish` wired to the registry's publish command (`make sync` regenerates the marketplace catalog)
+- [x] 4 packages published & consistent: `pactd` 0.18.0, `kathreftestr` 0.1.1, `maple-proxy` 0.1.8, `phoenixd` 0.8.0
+
+Publishing/admin ops run on the registered-signer machine (MacMax) using the LAN signing-context
+workaround (`--registry-hostname embassy-5004a3db.local`); see [`registry/README.md`](registry/README.md).

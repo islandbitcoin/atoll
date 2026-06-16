@@ -6,7 +6,7 @@ This directory holds config and scripts for **Island Bitcoin's self-hosted Start
   — https://github.com/Start9Labs/startos-registry-startos/
 - **Host**: running on **Zion**
 - **Public URL**: `https://start9.bobodread.com`
-- **Status**: ✅ live — both packages published and confirmed installable by remote users.
+- **Status**: ✅ live — all four packages (`pactd`, `kathreftestr`, `maple-proxy`, `phoenixd`) published and confirmed installable by remote users.
 
 ## How the Start9 "store" works
 
@@ -97,8 +97,10 @@ CAT add-package ai maple-proxy          # tag a package into a category
 It exports `REG`/`HOST` and defines `ibreg` (start-cli wrapper) + `CAT` (category shortcut),
 using the same defaults as `publish.sh`. Must run on a LAN machine with the registered key.
 
-## Outstanding / nice-to-have
+## Notes
 
-- Add `start9.bobodread.com` to the registry's Web API interface **through StartOS** on Zion so it
-  lands in `registry-hostname` — then publishing wouldn't need the LAN-context workaround.
+- The LAN signing-context workaround (`--registry-hostname embassy-5004a3db.local`) is the
+  **accepted, permanent** publishing model — we are *not* adding `start9.bobodread.com` to the
+  registry's `registry-hostname` on Zion. Always publish from a registered-signer machine on the
+  registry LAN (MacMax).
 - `registry-icon.png` / `registry-icon.datauri.txt` here are the registry icon source.
