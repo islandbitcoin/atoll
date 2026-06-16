@@ -1,9 +1,9 @@
 [submodule "packages/pact-startos"]
 	path = packages/pact-startos
-	url = https://github.com/bobodread876/pact-startos.git
+	url = https://github.com/islandbitcoin/pact-startos.git
 [submodule "packages/kathreftestr-startos"]
 	path = packages/kathreftestr-startos
-	url = https://github.com/bobodread876/kathreftestr-startos.git
+	url = https://github.com/islandbitcoin/kathreftestr-startos.git
 [submodule "umbrel/atoll-store"]
 	path = umbrel/atoll-store
 	url = https://github.com/islandbitcoin/atoll-store.git
