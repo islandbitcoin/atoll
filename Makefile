@@ -5,7 +5,7 @@
 PACKAGES := $(wildcard packages/*-startos)
 REGISTRY ?= https://start9.bobodread.com
 
-.PHONY: help init build publish publish-dry clean
+.PHONY: help init build publish publish-dry sync clean
 
 help:
 	@echo "atoll — Island Bitcoin community stores:"
@@ -13,6 +13,7 @@ help:
 	@echo "  make build        - build the .s9pk for every package in packages/"
 	@echo "  make publish      - build + publish every package to the registry ($(REGISTRY))"
 	@echo "  make publish-dry  - preview the publish steps without executing"
+	@echo "  make sync         - regenerate docs/packages.json from the live registry (then commit+push)"
 	@echo "  make clean        - remove built .s9pk artifacts"
 	@echo ""
 	@echo "  Publishing must run on the registered-signer machine (on the registry's LAN)."
@@ -35,6 +36,10 @@ publish:
 
 publish-dry:
 	@DRY_RUN=1 REGISTRY="$(REGISTRY)" ./registry/publish.sh $(PACKAGES)
+
+# Regenerate the marketplace catalog (docs/packages.json) from the live registry.
+sync:
+	@REGISTRY="$(REGISTRY)" ./registry/sync-marketplace.sh
 
 clean:
 	@for pkg in $(PACKAGES); do \

@@ -57,6 +57,23 @@ public `start9.bobodread.com`.
 > no re-upload), so re-running `make publish` only publishes new or version-bumped packages.
 > Set `FORCE=1` to remove and re-add an existing version.
 
+## Marketplace catalog (`packages.json`)
+
+The landing page (`docs/index.html`) renders its app grid from **`docs/packages.json`**, which is
+**generated from the live registry** — so the marketplace always matches what's actually published
+(name, description, categories, icon, version, platforms, and each package's landing link from its
+`marketingUrl`). Don't hand-edit `packages.json`.
+
+```bash
+make sync          # regenerate docs/packages.json from the registry (alias: registry/sync-marketplace.sh)
+git add docs/packages.json && git commit -m "sync marketplace" && git push   # publish to GitHub Pages
+```
+
+Run `make sync` after publishing a new package/version (it has the same LAN-machine + registered-key
+requirements as publishing). Per-card data comes from the registry; a package's **Website** link is
+its `marketingUrl` (set it in the package's `startos/manifest/index.ts`), and **Start9/Umbrel**
+badges are derived from the registry + the presence of an `umbrel/atoll-store/atoll-<id>` folder.
+
 ## Shell helpers (`ibreg` / `CAT`)
 
 `registry/ibreg.sh` defines convenience helpers so you don't retype the registry flags.

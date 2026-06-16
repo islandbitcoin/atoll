@@ -297,13 +297,6 @@
         <h4>Category</h4>
         <div id="cat-filters"></div>
       </div>
-      <div class="filter">
-        <h4>Attributes</h4>
-        <label class="opt"><input type="checkbox" class="f-tag" value="Non-custodial" /> Non-custodial</label>
-        <label class="opt"><input type="checkbox" class="f-tag" value="Nostr" /> Nostr</label>
-        <label class="opt"><input type="checkbox" class="f-tag" value="Lightning" /> Lightning</label>
-        <label class="opt"><input type="checkbox" class="f-tag" value="Bundled relay" /> Bundled relay</label>
-      </div>
       <button class="clearbtn" id="clear">Clear all filters</button>
     </aside>
 
@@ -403,51 +396,54 @@
       wrap.innerHTML = html;
     })();
 
-    const APPS = [
-      { name: "Pact", id: "atoll-pactd", icon: "assets/icons/pact.svg", category: "Networking",
-        platforms: ["umbrel", "start9"], tags: ["Nostr", "Lightning", "Non-custodial", "Bundled relay"],
-        desc: "Sovereign agent relationship bonds over Nostr & Lightning. Portable, mutually-consented, signed bonds between AI agents — settled in sats.",
-        umbrel: "https://github.com/islandbitcoin/atoll-store/tree/main/atoll-pactd", source: "https://github.com/islandbitcoin/pact-startos", site: "https://bobodread876.github.io/pact-site/" },
-      { name: "Kathreftestr", id: "atoll-kathreftestr", icon: "assets/icons/kathreftestr.svg", category: "Media",
-        platforms: ["umbrel", "start9"], tags: ["Nostr", "Lightning", "Self-hosted"],
-        desc: "Mirror a livestream to Nostr (NIP-53), with Lightning zaps. Re-broadcast YouTube/Twitch into any Nostr client — your node, your keys.",
-        umbrel: "https://github.com/islandbitcoin/atoll-store/tree/main/atoll-kathreftestr", source: "https://github.com/islandbitcoin/kathreftestr-startos", site: "https://bobodread876.github.io/kathreftestr/" }
-    ];
+    // Catalog is generated from the live registry by registry/sync-marketplace.sh -> packages.json,
+    // so the marketplace always reflects what's actually published. Do not hand-edit the list here.
+    let APPS = [];
+    let CAT_NAMES = {};   // category id -> display name
+    const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, c => (
+      { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
-    const state = { search: "", category: "All", plats: new Set(), tags: new Set() };
-    const categories = ["All", ...Array.from(new Set(APPS.map(a => a.category)))];
-
+    const state = { search: "", category: "All", plats: new Set() };
     const catFilters = document.getElementById("cat-filters");
-    categories.forEach(cat => {
-      const count = cat === "All" ? APPS.length : APPS.filter(a => a.category === cat).length;
-      const lbl = document.createElement("label");
-      lbl.className = "opt";
-      lbl.innerHTML = `<input type="radio" name="catf" value="${cat}" ${cat === "All" ? "checked" : ""}> ${cat} <span class="count">${count}</span>`;
-      lbl.querySelector("input").onchange = () => { state.category = cat; render(); };
-      catFilters.appendChild(lbl);
-    });
+
+    function buildCategoryFilter() {
+      const ids = ["All", ...Array.from(new Set(APPS.flatMap(a => a.categories || []))).sort()];
+      catFilters.innerHTML = "";
+      ids.forEach(cat => {
+        const label = cat === "All" ? "All" : (CAT_NAMES[cat] || cat);
+        const count = cat === "All" ? APPS.length : APPS.filter(a => (a.categories || []).includes(cat)).length;
+        const lbl = document.createElement("label");
+        lbl.className = "opt";
+        lbl.innerHTML = `<input type="radio" name="catf" value="${esc(cat)}" ${cat === "All" ? "checked" : ""}> ${esc(label)} <span class="count">${count}</span>`;
+        lbl.querySelector("input").onchange = () => { state.category = cat; render(); };
+        catFilters.appendChild(lbl);
+      });
+    }
     function syncCatButtons() {
       catFilters.querySelectorAll("input").forEach(i => { i.checked = (i.value === state.category); });
     }
-    document.querySelectorAll("[data-plat-count]").forEach(el => {
-      const p = el.getAttribute("data-plat-count");
-      el.textContent = APPS.filter(a => a.platforms.includes(p)).length;
-    });
+    function updatePlatCounts() {
+      document.querySelectorAll("[data-plat-count]").forEach(el => {
+        const p = el.getAttribute("data-plat-count");
+        el.textContent = APPS.filter(a => (a.platforms || []).includes(p)).length;
+      });
+    }
+
     document.getElementById("search").addEventListener("input", e => { state.search = e.target.value.toLowerCase().trim(); render(); });
     document.querySelectorAll(".f-plat").forEach(c => c.onchange = () => { c.checked ? state.plats.add(c.value) : state.plats.delete(c.value); render(); });
-    document.querySelectorAll(".f-tag").forEach(c => c.onchange = () => { c.checked ? state.tags.add(c.value) : state.tags.delete(c.value); render(); });
     document.getElementById("clear").onclick = () => {
-      state.search = ""; state.category = "All"; state.plats.clear(); state.tags.clear();
+      state.search = ""; state.category = "All"; state.plats.clear();
       document.getElementById("search").value = "";
       document.querySelectorAll(".sidebar input").forEach(i => i.checked = false);
       syncCatButtons(); render();
     };
+
     function matches(a) {
-      if (state.category !== "All" && a.category !== state.category) return false;
-      if (state.plats.size && ![...state.plats].every(p => a.platforms.includes(p))) return false;
-      if (state.tags.size && ![...state.tags].every(t => a.tags.includes(t))) return false;
+      if (state.category !== "All" && !(a.categories || []).includes(state.category)) return false;
+      if (state.plats.size && ![...state.plats].every(p => (a.platforms || []).includes(p))) return false;
       if (state.search) {
-        const hay = (a.name + " " + a.id + " " + a.desc + " " + a.category + " " + a.tags.join(" ")).toLowerCase();
+        const hay = (a.name + " " + a.id + " " + (a.description || "") + " " +
+          (a.categories || []).map(c => CAT_NAMES[c] || c).join(" ")).toLowerCase();
         if (!hay.includes(state.search)) return false;
       }
       return true;
@@ -455,30 +451,46 @@
     function render() {
       const grid = document.getElementById("grid");
       const list = APPS.filter(matches);
-      document.getElementById("cat-title").textContent = state.category === "All" ? "All apps" : state.category;
+      document.getElementById("cat-title").textContent =
+        state.category === "All" ? "All apps" : (CAT_NAMES[state.category] || state.category);
       document.getElementById("result-count").textContent = `${list.length} app${list.length === 1 ? "" : "s"}`;
       grid.innerHTML = "";
       if (!list.length) { grid.innerHTML = '<div class="empty">No apps match your filters yet — try clearing them.</div>'; return; }
       list.forEach(a => {
-        const plats = a.platforms.map(p => `<span class="plat ${p}">${p === "umbrel" ? "Umbrel" : "Start9"}</span>`).join("");
-        const tags = `<span class="tag cat">${a.category}</span>` + a.tags.map(t => `<span class="tag">${t}</span>`).join("");
+        const plats = (a.platforms || []).map(p => `<span class="plat ${p}">${p === "umbrel" ? "Umbrel" : "Start9"}</span>`).join("");
+        const cats = (a.categories || []).map(c => `<span class="tag cat">${esc(CAT_NAMES[c] || c)}</span>`).join("");
+        const ver = a.version ? ` · v${esc(String(a.version).split(":")[0])}` : "";
         const el = document.createElement("article");
         el.className = "product";
         el.innerHTML = `
-          <div class="top"><div class="icon"><img src="${a.icon}" alt="${a.name} icon" loading="lazy"></div><div><h3>${a.name}</h3><span class="pid">${a.id}</span></div></div>
-          <p class="desc">${a.desc}</p>
-          <div class="tags">${tags}</div>
+          <div class="top"><div class="icon"><img src="${esc(a.icon)}" alt="${esc(a.name)} icon" loading="lazy"></div><div><h3>${esc(a.name)}</h3><span class="pid">${esc(a.id)}</span></div></div>
+          <p class="desc">${esc(a.description)}</p>
+          <div class="tags">${cats}</div>
           <div class="plats">${plats}</div>
-          <div class="price"><span aria-hidden="true">⚡</span> Free · self-hosted</div>
+          <div class="price"><span aria-hidden="true">⚡</span> Free · self-hosted${ver}</div>
           <div class="actions">
             <a class="btn primary" href="#install">Install</a>
-            <a class="btn ghost" href="${a.site || a.source}" target="_blank" rel="noopener">${a.site ? "Website" : "Readme"}</a>
-            <a class="btn ghost" href="${a.source}" target="_blank" rel="noopener">Source</a>
+            ${a.site ? `<a class="btn ghost" href="${esc(a.site)}" target="_blank" rel="noopener">Website</a>` : ""}
+            ${a.source ? `<a class="btn ghost" href="${esc(a.source)}" target="_blank" rel="noopener">Source</a>` : ""}
           </div>`;
         grid.appendChild(el);
       });
     }
-    render();
+
+    fetch("packages.json", { cache: "no-cache" })
+      .then(r => r.ok ? r.json() : Promise.reject(r.status))
+      .then(data => {
+        CAT_NAMES = data.categories || {};
+        APPS = data.packages || [];
+        buildCategoryFilter();
+        updatePlatCounts();
+        render();
+      })
+      .catch(err => {
+        console.error("packages.json load failed:", err);
+        document.getElementById("grid").innerHTML =
+          '<div class="empty">Couldn’t load the catalog right now. Please try again shortly.</div>';
+      });
 
     // copy-to-clipboard for store URLs
     const toast = document.getElementById("toast");
