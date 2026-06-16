@@ -10,3 +10,6 @@
 [submodule "packages/phoenix-startos"]
 	path = packages/phoenix-startos
 	url = https://github.com/islandbitcoin/phoenixd-startos.git
+[submodule "packages/maple-proxy-startos"]
+	path = packages/maple-proxy-startos
+	url = https://github.com/islandbitcoin/maple-proxy-startos.git
