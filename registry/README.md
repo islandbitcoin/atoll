@@ -57,6 +57,29 @@ public `start9.bobodread.com`.
 > no re-upload), so re-running `make publish` only publishes new or version-bumped packages.
 > Set `FORCE=1` to remove and re-add an existing version.
 
+## Shell helpers (`ibreg` / `CAT`)
+
+`registry/ibreg.sh` defines convenience helpers so you don't retype the registry flags.
+Source it once from your shell rc (survives restarts):
+
+```bash
+# zsh (macOS default):
+echo 'source ~/Documents/Start9/Repos/atoll/registry/ibreg.sh' >> ~/.zshrc
+# bash:
+echo 'source ~/Documents/Start9/Repos/atoll/registry/ibreg.sh' >> ~/.bashrc
+```
+
+Then in any shell:
+
+```bash
+ibreg registry package index            # raw start-cli against the registry
+CAT list                                # list categories
+CAT add-package ai maple-proxy          # tag a package into a category
+```
+
+It exports `REG`/`HOST` and defines `ibreg` (start-cli wrapper) + `CAT` (category shortcut),
+using the same defaults as `publish.sh`. Must run on a LAN machine with the registered key.
+
 ## Outstanding / nice-to-have
 
 - Add `start9.bobodread.com` to the registry's Web API interface **through StartOS** on Zion so it
