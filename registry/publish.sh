@@ -151,7 +151,11 @@ for dir in "${PKG_DIRS[@]}"; do
   version="$(printf '%s' "$manifest" | python3 -c 'import json,sys; print(json.load(sys.stdin)["version"])')"
   notes="$(printf '%s' "$manifest"   | python3 -c 'import json,sys; rn=json.load(sys.stdin).get("releaseNotes"); print((rn.get("en_US") or next(iter(rn.values()),"")) if isinstance(rn,dict) else (rn or ""))')"
   tag="v${version%%:*}"                    # 0.18.0:0 -> v0.18.0
-  repo="$RELEASE_OWNER/$(basename "$dir")" # releases live under RELEASE_OWNER (e.g. islandbitcoin/pact-startos)
+  # release repo: NAME from the dir's git remote (handles path != repo name, e.g.
+  # packages/phoenix-startos -> phoenixd-startos), OWNER forced to RELEASE_OWNER.
+  origin_url="$(git -C "$dir" remote get-url origin 2>/dev/null || true)"
+  if [ -n "$origin_url" ]; then repo_name="$(basename "${origin_url%.git}")"; else repo_name="$(basename "$dir")"; fi
+  repo="$RELEASE_OWNER/$repo_name"
   [ -n "$notes" ] || notes="$id $version"
 
   log "  id=$id  version=$version  tag=$tag  repo=$repo  archs=${#s9pks[@]}"
