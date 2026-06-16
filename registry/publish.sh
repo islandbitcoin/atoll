@@ -14,7 +14,8 @@
 # `gh` must be logged in with push access to the release owner (RELEASE_OWNER).
 #
 # Usage:
-#   ./registry/publish.sh [package-dir ...]      # default: packages/*-startos
+#   ./registry/publish.sh [package-dir ...]              # publish: default packages/*-startos
+#   ./registry/publish.sh add-package <name> [--push]    # register a new <name>-startos submodule
 #
 # Env (defaults):
 #   REGISTRY=https://start9.bobodread.com         registry connection URL
@@ -45,6 +46,37 @@ warn() { printf '%swarn:%s %s\n' "$c_yellow" "$c_off" "$*" >&2; }
 die()  { printf '%serror:%s %s\n' "$c_red" "$c_off" "$*" >&2; exit 1; }
 # run a mutating command (honors DRY_RUN); reads are called directly.
 run()  { if [ -n "$DRY_RUN" ]; then printf '   %s[dry-run]%s %s\n' "$c_dim" "$c_off" "$*"; else "$@"; fi; }
+
+# ── subcommand: add-package ─────────────────────────────────────────────────────────────
+# Register a new <name>-startos builder as a submodule under packages/. The GitHub repo
+# RELEASE_OWNER/<name>-startos must already exist (this clones it).
+#   ./registry/publish.sh add-package maple-proxy            # or --package-name maple-proxy
+#   ./registry/publish.sh add-package maple-proxy --push     # also push the atoll change
+if [ "${1:-}" = "add-package" ]; then
+  shift
+  name=""; do_push=""
+  while [ "$#" -gt 0 ]; do
+    case "$1" in
+      --package-name)   name="${2:?--package-name needs a value}"; shift 2 ;;
+      --package-name=*) name="${1#*=}"; shift ;;
+      --push)           do_push=1; shift ;;
+      -*)               die "add-package: unknown flag $1" ;;
+      *)                name="$1"; shift ;;
+    esac
+  done
+  [ -n "$name" ] || die "add-package: give a name, e.g. 'add-package maple-proxy' (or --package-name maple-proxy)"
+  command -v git >/dev/null 2>&1 || die "missing required tool: git"
+  name="${name%-startos}"                      # accept 'maple-proxy' or 'maple-proxy-startos'
+  repo="$RELEASE_OWNER/${name}-startos"
+  path="packages/${name}-startos"
+  [ -e "$REPO_ROOT/$path" ] && die "$path already exists"
+  log "add-package: https://github.com/${repo}.git -> $path"
+  run git -C "$REPO_ROOT" submodule add "https://github.com/${repo}.git" "$path"
+  run git -C "$REPO_ROOT" commit -m "Add ${name}-startos package"
+  if [ -n "$do_push" ]; then run git -C "$REPO_ROOT" push
+  else log "committed — run 'git push' (or re-run with --push) to publish the change"; fi
+  exit 0
+fi
 
 # ── preflight ──────────────────────────────────────────────────────────────────────────
 for t in start-cli gh make python3; do

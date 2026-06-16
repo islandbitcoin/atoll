@@ -20,6 +20,13 @@ install every published app.
 app's GitHub Release, and indexes them into the registry. From the parent repo you can also run
 `make publish` (or `make publish-dry` to preview).
 
+**Add a new package** (registers `RELEASE_OWNER/<name>-startos` as a submodule under `packages/`;
+the GitHub repo must already exist):
+
+```bash
+./registry/publish.sh add-package <name> [--push]   # e.g. add-package maple-proxy
+```
+
 ⚠️ **Must run on the registered-signer machine** (the one whose developer key is registered as a
 registry admin/signer **and** is on the registry's LAN). StartOS signs each authenticated request
 using the **registry hostname as the Ed25519 signing context**, and the server only accepts
