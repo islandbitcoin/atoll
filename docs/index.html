@@ -161,8 +161,8 @@
     .plat.umbrel { color: var(--purple-soft); background: rgba(127,66,161,0.2); border: 1px solid rgba(127,66,161,0.45); }
     .plat.start9 { color: var(--blue); background: rgba(100,183,225,0.14); border: 1px solid rgba(100,183,225,0.4); }
     .price { font-size: 13px; color: var(--green); font-weight: 700; margin-bottom: 13px; }
-    .actions { display: flex; gap: 9px; }
-    .btn { flex: 1; text-align: center; padding: 10px 12px; border-radius: 10px; font-size: 13px; font-weight: 700; cursor: pointer; transition: .15s; }
+    .actions { display: flex; gap: 9px; flex-wrap: wrap; }
+    .btn { flex: 1 1 auto; min-width: 78px; text-align: center; padding: 10px 12px; border-radius: 10px; font-size: 13px; font-weight: 700; cursor: pointer; transition: .15s; }
     .btn.primary { background: linear-gradient(135deg, var(--gold), #f59f0b); color: #2a1206; border: 1px solid var(--gold); }
     .btn.primary:hover { box-shadow: var(--glow-gold); text-decoration: none; }
     .btn.ghost { background: transparent; color: var(--muted); border: 1px solid var(--border-2); }
@@ -407,11 +407,11 @@
       { name: "Pact", id: "atoll-pactd", icon: "assets/icons/pact.svg", category: "Networking",
         platforms: ["umbrel", "start9"], tags: ["Nostr", "Lightning", "Non-custodial", "Bundled relay"],
         desc: "Sovereign agent relationship bonds over Nostr & Lightning. Portable, mutually-consented, signed bonds between AI agents — settled in sats.",
-        umbrel: "https://github.com/islandbitcoin/atoll-store/tree/main/atoll-pactd", source: "https://github.com/islandbitcoin/pact-startos" },
+        umbrel: "https://github.com/islandbitcoin/atoll-store/tree/main/atoll-pactd", source: "https://github.com/islandbitcoin/pact-startos", site: "https://bobodread876.github.io/pact-site/" },
       { name: "Kathreftestr", id: "atoll-kathreftestr", icon: "assets/icons/kathreftestr.svg", category: "Media",
         platforms: ["umbrel", "start9"], tags: ["Nostr", "Lightning", "Self-hosted"],
         desc: "Mirror a livestream to Nostr (NIP-53), with Lightning zaps. Re-broadcast YouTube/Twitch into any Nostr client — your node, your keys.",
-        umbrel: "https://github.com/islandbitcoin/atoll-store/tree/main/atoll-kathreftestr", source: "https://github.com/islandbitcoin/kathreftestr-startos" }
+        umbrel: "https://github.com/islandbitcoin/atoll-store/tree/main/atoll-kathreftestr", source: "https://github.com/islandbitcoin/kathreftestr-startos", site: "https://bobodread876.github.io/kathreftestr/" }
     ];
 
     const state = { search: "", category: "All", plats: new Set(), tags: new Set() };
@@ -472,6 +472,7 @@
           <div class="price"><span aria-hidden="true">⚡</span> Free · self-hosted</div>
           <div class="actions">
             <a class="btn primary" href="#install">Install</a>
+            <a class="btn ghost" href="${a.site || a.source}" target="_blank" rel="noopener">${a.site ? "Website" : "Readme"}</a>
             <a class="btn ghost" href="${a.source}" target="_blank" rel="noopener">Source</a>
           </div>`;
         grid.appendChild(el);
