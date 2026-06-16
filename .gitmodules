@@ -7,8 +7,8 @@
 [submodule "umbrel/atoll-store"]
 	path = umbrel/atoll-store
 	url = https://github.com/islandbitcoin/atoll-store.git
-[submodule "packages/phoenix-startos"]
-	path = packages/phoenix-startos
+[submodule "packages/phoenixd-startos"]
+	path = packages/phoenixd-startos
 	url = https://github.com/islandbitcoin/phoenixd-startos.git
 [submodule "packages/maple-proxy-startos"]
 	path = packages/maple-proxy-startos
