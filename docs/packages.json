@@ -63,6 +63,19 @@
       ]
     },
     {
+      "id": "memos",
+      "name": "Memos",
+      "description": "Privacy-first, lightweight note-taking service",
+      "version": "0.29.1:0",
+      "categories": [],
+      "icon": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ibWVtb3MtZ3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiM2MzY2ZjEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjOGI1Y2Y2Ii8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB4PSI4IiB5PSI4IiB3aWR0aD0iODQiIGhlaWdodD0iODQiIHJ4PSIxOCIgcnk9IjE4IiBmaWxsPSJ1cmwoI21lbW9zLWdyYWQpIi8+CiAgPHRleHQgeD0iNTAiIHk9IjY4IiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjUyIiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+TTwvdGV4dD4KPC9zdmc+Cg==",
+      "site": "https://usememos.com/",
+      "source": "https://github.com/islandbitcoin/memos-startos",
+      "platforms": [
+        "start9"
+      ]
+    },
+    {
       "id": "pactd",
       "name": "Pact",
       "description": "Sovereign agent relationship bonds over Nostr & Lightning",
