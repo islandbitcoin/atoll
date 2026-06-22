@@ -13,3 +13,9 @@
 [submodule "packages/maple-proxy-startos"]
 	path = packages/maple-proxy-startos
 	url = https://github.com/islandbitcoin/maple-proxy-startos.git
+[submodule "packages/forgejo-startos"]
+	path = packages/forgejo-startos
+	url = https://github.com/islandbitcoin/forgejo-startos.git
+[submodule "packages/joplin-server-startos"]
+	path = packages/joplin-server-startos
+	url = https://github.com/islandbitcoin/joplin-server-startos.git
