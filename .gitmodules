@@ -19,3 +19,6 @@
 [submodule "packages/joplin-server-startos"]
 	path = packages/joplin-server-startos
 	url = https://github.com/islandbitcoin/joplin-server-startos.git
+[submodule "packages/memos-startos"]
+	path = packages/memos-startos
+	url = https://github.com/islandbitcoin/memos-startos
