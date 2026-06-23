@@ -10,7 +10,7 @@
       "id": "beszel",
       "name": "Beszel",
       "description": "Lightweight server monitoring with Docker stats, historical data, and alerts.",
-      "version": "0.9.1:3",
+      "version": "0.9.1:4",
       "categories": [
         "files-and-productivity"
       ],
