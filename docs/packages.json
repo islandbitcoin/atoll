@@ -18,7 +18,8 @@
       "site": "https://beszel.dev/",
       "source": "https://github.com/islandbitcoin/beszel-startos",
       "platforms": [
-        "start9"
+        "start9",
+        "umbrel"
       ]
     },
     {
