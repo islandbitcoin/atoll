@@ -2,6 +2,7 @@
   "categories": {
     "ai": "AI",
     "files-and-productivity": "Files and Productivity",
+    "lighting": "Lighting",
     "media": "Media",
     "networking": "Networking"
   },
@@ -48,6 +49,22 @@
       "icon": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IkthdGhyZWZ0ZXN0ciI+CiAgPHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIHJ4PSIyMiIgZmlsbD0iIzE1MTUxYyIvPgogIDwhLS0gYSBzdHJlYW0gKHBsYXkpIGdseXBoIGFuZCBpdHMgbWlycm9yIHJlZmxlY3Rpb24sIHNwbGl0IGJ5IHRoZSBtaXJyb3IgbGluZSAtLT4KICA8cG9seWdvbiBwb2ludHM9IjQwLDIwIDY4LDM3IDQwLDU0IiBmaWxsPSIjZjc5MzFhIi8+CiAgPHBvbHlnb24gcG9pbnRzPSI0MCw4MCA2OCw2MyA0MCw0NiIgZmlsbD0iI2Y3OTMxYSIgb3BhY2l0eT0iMC4zMiIvPgogIDxsaW5lIHgxPSIyNiIgeTE9IjUwIiB4Mj0iNzQiIHkyPSI1MCIgc3Ryb2tlPSIjZjc5MzFhIiBzdHJva2Utd2lkdGg9IjIuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBvcGFjaXR5PSIwLjYiLz4KPC9zdmc+Cg==",
       "site": "https://bobodread876.github.io/kathreftestr/",
       "source": "https://github.com/bobodread876/kathreftestr",
+      "platforms": [
+        "start9",
+        "umbrel"
+      ]
+    },
+    {
+      "id": "lightning-server",
+      "name": "Lightning Server",
+      "description": "Self-hosted Lightning Address server with Nostr zap receipts and payment notifications.",
+      "version": "0.2.2:1",
+      "categories": [
+        "lighting"
+      ],
+      "icon": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTYgMjU2IiB3aWR0aD0iMjU2IiBoZWlnaHQ9IjI1NiI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMwYTEwMjQiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMDcwYjE0Ii8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJib2x0IiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzM4YTZmZiIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiM4YzY3ZmYiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDxyZWN0IHdpZHRoPSIyNTYiIGhlaWdodD0iMjU2IiByeD0iNDgiIGZpbGw9InVybCgjYmcpIi8+CiAgPCEtLSBMaWdodG5pbmcgYm9sdCAtLT4KICA8cGF0aCBkPSJNIDE0OCA0MCBMIDg0IDE0MCBMIDEyMCAxNDAgTCA5NiAyMTYgTCAxNzYgMTA4IEwgMTM2IDEwOCBMIDE2OCA0MCBaIiAKICAgICAgICBmaWxsPSJ1cmwoI2JvbHQpIiAKICAgICAgICBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC4yKSIgCiAgICAgICAgc3Ryb2tlLXdpZHRoPSIyIgogICAgICAgIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KICA8IS0tIEdsb3cgZWZmZWN0IC0tPgogIDxwYXRoIGQ9Ik0gMTQ4IDQwIEwgODQgMTQwIEwgMTIwIDE0MCBMIDk2IDIxNiBMIDE3NiAxMDggTCAxMzYgMTA4IEwgMTY4IDQwIFoiIAogICAgICAgIGZpbGw9Im5vbmUiCiAgICAgICAgc3Ryb2tlPSJyZ2JhKDU2LDE2NiwyNTUsMC4zKSIgCiAgICAgICAgc3Ryb2tlLXdpZHRoPSI4IgogICAgICAgIHN0cm9rZS1saW5lam9pbj0icm91bmQiCiAgICAgICAgZmlsdGVyPSJibHVyKDRweCkiLz4KPC9zdmc+Cg==",
+      "site": "https://github.com/dplusplus1024/lightning-server",
+      "source": "https://github.com/islandbitcoin/lightning-server-startos",
       "platforms": [
         "start9",
         "umbrel"
