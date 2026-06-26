@@ -22,3 +22,6 @@
 [submodule "packages/memos-startos"]
 	path = packages/memos-startos
 	url = https://github.com/islandbitcoin/memos-startos
+[submodule "packages/lightning-server-startos"]
+	path = packages/lightning-server-startos
+	url = https://github.com/islandbitcoin/lightning-server-startos.git
