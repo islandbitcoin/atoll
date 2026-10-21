@@ -83,6 +83,9 @@ round trip is claimed. The registered-key signed release assets have been
 verified against their published SHA-256 hashes.
 Beta.3 is indexed at `https://start9.bobodread.com`; the landing catalog was
 regenerated from the live registry, including its existing Paseo listing.
+The beta.4 package source adds automatic scoped publisher setup for NTFY from
+the existing Start9 Registry. Its package CI and signed runtime checks pass;
+live Atoll notification acceptance remains pending the Zion upgrade.
 See [the package instructions](https://github.com/islandbitcoin/atoll-recovery-startos/blob/main/instructions.md).
 
 Publish only its reviewed, locally signed release assets to the registry; the
