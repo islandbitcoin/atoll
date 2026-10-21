@@ -18,7 +18,8 @@ atoll/
 │   ├── pact-startos/
 │   ├── kathreftestr-startos/
 │   ├── maple-proxy-startos/
-│   └── phoenixd-startos/
+│   ├── phoenixd-startos/
+│   └── atoll-recovery-startos/
 ├── registry/      # config + publish scripts for the Start9 Marketplace registry
 ├── Makefile       # build-all / publish-all orchestration
 └── README.md
@@ -63,3 +64,17 @@ Consequence:
 
 Publishing/admin ops run on the registered-signer machine (MacMax) using the LAN signing-context
 workaround (`--registry-hostname embassy-5004a3db.local`); see [`registry/README.md`](registry/README.md).
+
+## Atoll Recovery prerelease
+
+Atoll Recovery copies encrypted Cashu ops backups to dedicated Nextcloud storage,
+verifies destination read-back and optionally sends HTTPS health notifications.
+It carries no recovery private identity or issuance authority. The ops-service
+will be packaged separately.
+
+The initial release is a prerelease for StartOS validation. Actual installation,
+action/task handling and a StartOS backup/restore round trip remain unverified.
+See [the package instructions](https://github.com/islandbitcoin/atoll-recovery-startos/blob/main/instructions.md).
+
+Publish only its reviewed, locally signed release assets to the registry; the
+GitHub build workflow creates test artifacts and holds no registry signing key.
