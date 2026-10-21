@@ -72,8 +72,10 @@ verifies destination read-back and optionally sends HTTPS health notifications.
 It carries no recovery private identity or issuance authority. The ops-service
 will be packaged separately.
 
-The initial release is a prerelease for StartOS validation. Actual installation,
-action/task handling and a StartOS backup/restore round trip remain unverified.
+The corrected prerelease installs on Zion running StartOS 0.4.0.3. Initial setup
+tasks and the unconfigured Recovery Status action have been verified. Transfer
+configuration, runtime copy/alert behavior and a StartOS backup/restore round trip
+remain unverified.
 See [the package instructions](https://github.com/islandbitcoin/atoll-recovery-startos/blob/main/instructions.md).
 
 Publish only its reviewed, locally signed release assets to the registry; the
