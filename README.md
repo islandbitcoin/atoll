@@ -18,7 +18,8 @@ atoll/
 │   ├── pact-startos/
 │   ├── kathreftestr-startos/
 │   ├── maple-proxy-startos/
-│   └── phoenixd-startos/
+│   ├── phoenixd-startos/
+│   └── atoll-recovery-startos/
 ├── registry/      # config + publish scripts for the Start9 Marketplace registry
 ├── Makefile       # build-all / publish-all orchestration
 └── README.md
@@ -63,3 +64,26 @@ Consequence:
 
 Publishing/admin ops run on the registered-signer machine (MacMax) using the LAN signing-context
 workaround (`--registry-hostname embassy-5004a3db.local`); see [`registry/README.md`](registry/README.md).
+
+## Atoll Recovery prerelease
+
+Atoll Recovery copies encrypted Cashu ops backups to dedicated Nextcloud storage,
+verifies destination read-back and optionally sends HTTPS health notifications.
+It carries no recovery private identity or issuance authority. The ops-service
+will be packaged separately.
+
+Beta.3 installs on Zion running StartOS 0.4.0.3. Issuer pairing with the
+staging Worker and Nextcloud browser authorization for the dedicated non-admin
+account have passed on the server. Administrator authorization was rejected;
+the pending flow was cleared and a fresh dedicated-account flow succeeded.
+The copy runner starts. Recovery Status correctly remains Failed / Unknown
+while the staging escrow prefix contains no exports; notifications are disabled.
+No successful artifact transfer, authenticated restore or StartOS backup/restore
+round trip is claimed. The registered-key signed release assets have been
+verified against their published SHA-256 hashes.
+Beta.3 is indexed at `https://start9.bobodread.com`; the landing catalog was
+regenerated from the live registry, including its existing Paseo listing.
+See [the package instructions](https://github.com/islandbitcoin/atoll-recovery-startos/blob/main/instructions.md).
+
+Publish only its reviewed, locally signed release assets to the registry; the
+GitHub build workflow creates test artifacts and holds no registry signing key.
