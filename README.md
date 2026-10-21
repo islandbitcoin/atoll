@@ -72,10 +72,15 @@ verifies destination read-back and optionally sends HTTPS health notifications.
 It carries no recovery private identity or issuance authority. The ops-service
 will be packaged separately.
 
-The corrected prerelease installs on Zion running StartOS 0.4.0.3. Initial setup
-tasks and the unconfigured Recovery Status action have been verified. Transfer
-configuration, runtime copy/alert behavior and a StartOS backup/restore round trip
-remain unverified.
+Beta.3 installs on Zion running StartOS 0.4.0.3. Issuer pairing with the
+staging Worker and Nextcloud browser authorization for the dedicated non-admin
+account have passed on the server. Administrator authorization was rejected;
+the pending flow was cleared and a fresh dedicated-account flow succeeded.
+The copy runner starts. Recovery Status correctly remains Failed / Unknown
+while the staging escrow prefix contains no exports; notifications are disabled.
+No successful artifact transfer, authenticated restore or StartOS backup/restore
+round trip is claimed. The registered-key signed release assets have been
+verified against their published SHA-256 hashes.
 See [the package instructions](https://github.com/islandbitcoin/atoll-recovery-startos/blob/main/instructions.md).
 
 Publish only its reviewed, locally signed release assets to the registry; the
