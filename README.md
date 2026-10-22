@@ -83,8 +83,10 @@ The NTFY dependency supplied a scoped publisher automatically; its authenticated
 read-only subscription received failure and healthy transitions. Phone/desktop
 push, human acknowledgement, separate-machine recovery, offline key custody and
 a StartOS backup/restore round trip remain unverified. This is staging evidence.
-Beta.3 is indexed in the registry; beta.4 imports failed with GitHub connection
-resets. Beta.5 was sideloaded from the signed package.
+Beta.5 is indexed in the registry. The earlier GitHub fetch failure was isolated
+to the StartTunnel outbound route: import passed on wired egress, then passed
+on the original tunnel route after upgrading its server from 0.4.0-alpha.15 to
+1.3.1. Zion initially received beta.5 by sideload.
 See [the package instructions](https://github.com/islandbitcoin/atoll-recovery-startos/blob/main/instructions.md).
 
 Publish only its reviewed, locally signed release assets to the registry; the
