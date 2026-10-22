@@ -72,23 +72,19 @@ verifies destination read-back and optionally sends HTTPS health notifications.
 It carries no recovery private identity or issuance authority. The ops-service
 will be packaged separately.
 
-Beta.3 installs on Zion running StartOS 0.4.0.3. Issuer pairing with the
-staging Worker and Nextcloud browser authorization for the dedicated non-admin
-account have passed on the server. Administrator authorization was rejected;
-the pending flow was cleared and a fresh dedicated-account flow succeeded.
-The copy runner starts. Recovery Status correctly remains Failed / Unknown
-while the staging escrow prefix contains no exports; notifications are disabled.
-No successful artifact transfer, authenticated restore or StartOS backup/restore
-round trip is claimed. The registered-key signed release assets have been
-verified against their published SHA-256 hashes.
-Beta.3 is indexed at `https://start9.bobodread.com`; the landing catalog was
-regenerated from the live registry, including its existing Paseo listing.
-Beta.4 is installed on Zion and obtained its NTFY publisher automatically. The
-first failure alert reached the authenticated read-only web subscription, and
-Recovery Status separately recorded healthy delivery evidence. Copy freshness
-remains Failed / Unknown without an export. Phone/desktop push and human
-acknowledgement remain separate checks. Beta.4 registry imports failed with
-GitHub connection resets; it was sideloaded from the verified release.
+Beta.5 is installed on Zion running StartOS 0.4.0.3 with setup retained.
+Its runner copied a real staging cron export into Nextcloud and verified
+read-back. An independent download matched the R2 ciphertext digest; isolated
+restoration recovered all escrow keys, retained the recovery fence, disabled
+operator credentials and omitted sessions. The temporary plaintext database
+was removed. The original 03:17 UTC nightly schedule is restored.
+
+The NTFY dependency supplied a scoped publisher automatically; its authenticated
+read-only subscription received failure and healthy transitions. Phone/desktop
+push, human acknowledgement, separate-machine recovery, offline key custody and
+a StartOS backup/restore round trip remain unverified. This is staging evidence.
+Beta.3 is indexed in the registry; beta.4 imports failed with GitHub connection
+resets. Beta.5 was sideloaded from the signed package.
 See [the package instructions](https://github.com/islandbitcoin/atoll-recovery-startos/blob/main/instructions.md).
 
 Publish only its reviewed, locally signed release assets to the registry; the
