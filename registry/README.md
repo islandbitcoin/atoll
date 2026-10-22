@@ -104,3 +104,23 @@ using the same defaults as `publish.sh`. Must run on a LAN machine with the regi
   registry's `registry-hostname` on Zion. Always publish from a registered-signer machine on the
   registry LAN (MacMax).
 - `registry-icon.png` / `registry-icon.datauri.txt` here are the registry icon source.
+
+## Verified import recovery (2026-10-22 UTC)
+
+Atoll Recovery beta.5 import failed with a GitHub connection reset while the
+registry used its StartTunnel outbound gateway. Temporarily selecting the wired
+gateway for this service alone allowed import; its original route was restored.
+After upgrading the tunnel server from 0.4.0-alpha.15 to the checksum-verified
+official 1.3.1 package, the same import succeeded through StartTunnel. The live
+index includes beta.5, and the landing catalog was regenerated from that index.
+This isolates the failing path and confirms the upgrade resolved the observed
+symptom; it does not identify a specific faulty packet or code change.
+
+The Debian 13 host retained its WireGuard identity, peer keys, subnet, web
+certificate, password and non-HTTP forwarding targets. The upstream migration
+replaced the old port-80 forward with its built-in HTTP-to-HTTPS redirect, which
+was verified. Zion HTTPS and the registry API passed after restart. Protected
+rollback state and the reconstructed old package remain root-only on the tunnel
+host; the temporary rollback timer was cancelled after verification. The official
+stable APT repository now lists installed/candidate version 1.3.1. No reboot or
+Zion-wide gateway change occurred.
