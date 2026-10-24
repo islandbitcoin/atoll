@@ -27,7 +27,7 @@ atoll/
 
 ## The two platforms have different native models
 
-This is the key thing to keep straight — they are **not** the same mechanism:
+This is the key thing to keep straight: they are **not** the same mechanism:
 
 | | Umbrel | Start9 (v0.4.0 Marketplace) |
 |---|---|---|
@@ -38,7 +38,7 @@ This is the key thing to keep straight — they are **not** the same mechanism:
 Consequence:
 - **Umbrel** → all apps in a *single* store repo (`atoll-store`, tracked under `umbrel/`). One repo, many apps.
 - **Start9** → keep one `.s9pk` *builder* per app under `packages/`; they all publish to the
-  one registry. There is no "merge" of builders — the registry is the store.
+  one registry. There is no "merge" of builders, the registry is the store.
 
 ## Adding a new app
 
@@ -51,13 +51,13 @@ Consequence:
 3. **Build & publish**: `make build` produces every `.s9pk`; `make publish` pushes them to
    the registry at `start9.bobodread.com`.
 
-## Status (2026-06-16) — ✅ live in production
+## Status (2026-06-16): ✅ live in production
 
 - [x] Parent repo scaffolded
 - [x] Umbrel stores consolidated into the single `atoll-store` (id: atoll, "Island Bitcoin")
 - [x] Landing page added under `docs/`
 - [x] `atoll-store` pushed to GitHub and wired in as a submodule under `umbrel/`
-- [x] GitHub Pages enabled — https://islandbitcoin.github.io/atoll/
+- [x] GitHub Pages enabled, https://islandbitcoin.github.io/atoll/
 - [x] Start9 registry `start9.bobodread.com` live on Zion (end users confirmed installing)
 - [x] `make publish` wired to the registry's publish command (`make sync` regenerates the marketplace catalog)
 - [x] 4 packages published & consistent: `pactd` 0.18.0, `kathreftestr` 0.1.1, `maple-proxy` 0.1.8, `phoenixd` 0.8.0
