@@ -2,11 +2,11 @@
 
 This directory holds config and scripts for **Island Bitcoin's self-hosted Start9 registry**.
 
-- **Software**: Start9 Marketplace package (`startos-registry-startos`, StartOS v0.4.0),
-https://github.com/Start9Labs/startos-registry-startos/
+- **Software**: Start9 Marketplace package (`startos-registry-startos`, StartOS v0.4.0)
+  — https://github.com/Start9Labs/startos-registry-startos/
 - **Host**: running on **Zion**
 - **Public URL**: `https://start9.bobodread.com`
-- **Status**: ✅ live, all four packages (`pactd`, `kathreftestr`, `maple-proxy`, `phoenixd`) published and confirmed installable by remote users.
+- **Status**: ✅ live — all four packages (`pactd`, `kathreftestr`, `maple-proxy`, `phoenixd`) published and confirmed installable by remote users.
 
 ## How the Start9 "store" works
 
@@ -14,7 +14,7 @@ Unlike Umbrel (a git repo of apps), a Start9 store is this **registry server**. 
 each app's `.s9pk` into it, and users add `start9.bobodread.com` as a marketplace to see and
 install every published app.
 
-## Publishing: `publish.sh`
+## Publishing — `publish.sh`
 
 `./registry/publish.sh [package-dir ...]` builds each package, uploads its `.s9pk`s to that
 app's GitHub Release, and indexes them into the registry. From the parent repo you can also run
@@ -30,7 +30,7 @@ the GitHub repo must already exist):
 ⚠️ **Must run on the registered-signer machine** (the one whose developer key is registered as a
 registry admin/signer **and** is on the registry's LAN). StartOS signs each authenticated request
 using the **registry hostname as the Ed25519 signing context**, and the server only accepts
-contexts in its `registry-hostname` list, which holds **LAN hostnames**, not the public URL. So:
+contexts in its `registry-hostname` list — which holds **LAN hostnames**, not the public URL. So:
 
 - `REGISTRY_HOSTNAME` must be one of those LAN names (default `embassy-5004a3db.local`); the
   `--registry-hostname` flag sets the signing context independently of the connection URL.
@@ -39,7 +39,7 @@ contexts in its `registry-hostname` list, which holds **LAN hostnames**, not the
 - The `.s9pk` passed to `package add` must be byte-identical to the file at `--url`, so the script
   builds once and then uploads+indexes those same files (avoids "merkle root mismatch").
 
-This LAN-context requirement only affects **publishing**, end users browse/install fine over the
+This LAN-context requirement only affects **publishing** — end users browse/install fine over the
 public `start9.bobodread.com`.
 
 ### Config (env vars, with defaults)
@@ -60,7 +60,7 @@ public `start9.bobodread.com`.
 ## Marketplace catalog (`packages.json`)
 
 The landing page (`docs/index.html`) renders its app grid from **`docs/packages.json`**, which is
-**generated from the live registry**: so the marketplace always matches what's actually published
+**generated from the live registry** — so the marketplace always matches what's actually published
 (name, description, categories, icon, version, platforms, and each package's landing link from its
 `marketingUrl`). Don't hand-edit `packages.json`.
 
@@ -100,7 +100,7 @@ using the same defaults as `publish.sh`. Must run on a LAN machine with the regi
 ## Notes
 
 - The LAN signing-context workaround (`--registry-hostname embassy-5004a3db.local`) is the
-  **accepted, permanent** publishing model. We are *not* adding `start9.bobodread.com` to the
+  **accepted, permanent** publishing model — we are *not* adding `start9.bobodread.com` to the
   registry's `registry-hostname` on Zion. Always publish from a registered-signer machine on the
   registry LAN (MacMax).
 - `registry-icon.png` / `registry-icon.datauri.txt` here are the registry icon source.

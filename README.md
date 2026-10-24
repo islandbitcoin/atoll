@@ -38,7 +38,7 @@ This is the key thing to keep straight: they are **not** the same mechanism:
 Consequence:
 - **Umbrel** → all apps in a *single* store repo (`atoll-store`, tracked under `umbrel/`). One repo, many apps.
 - **Start9** → keep one `.s9pk` *builder* per app under `packages/`; they all publish to the
-  one registry. There is no "merge" of builders, the registry is the store.
+  one registry. There is no "merge" of builders. The registry is the store.
 
 ## Adding a new app
 

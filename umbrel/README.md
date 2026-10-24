@@ -8,8 +8,8 @@ It currently lives at `~/Repos/atoll-store` and will be added here as a git subm
 
 ## Apps
 
-- `atoll-pactd`: Pact (migrated from `pact-umbrel-store/pact-pactd`)
-- `atoll-kathreftestr`: Kathreftestr (migrated from `kathreftestr-umbrel-store/kathreftestr`)
+- `atoll-pactd` — Pact (migrated from `pact-umbrel-store/pact-pactd`)
+- `atoll-kathreftestr` — Kathreftestr (migrated from `kathreftestr-umbrel-store/kathreftestr`)
 
 ## Add the store to Umbrel
 
