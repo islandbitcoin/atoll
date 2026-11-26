@@ -57,6 +57,8 @@ public `start9.bobodread.com`.
 > no re-upload), so re-running `make publish` only publishes new or version-bumped packages.
 > Set `FORCE=1` to remove and re-add an existing version.
 
+Release tags include the StartOS wrapper revision (for example, `v0.2.2_2`). The publisher uses the source commit recorded in the package. Older unsuffixed tags still serve the original archives.
+
 ## Marketplace catalog (`packages.json`)
 
 The landing page (`docs/index.html`) renders its app grid from **`docs/packages.json`**, which is
