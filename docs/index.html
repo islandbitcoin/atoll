@@ -459,7 +459,7 @@
       list.forEach(a => {
         const plats = (a.platforms || []).map(p => `<span class="plat ${p}">${p === "umbrel" ? "Umbrel" : "Start9"}</span>`).join("");
         const cats = (a.categories || []).map(c => `<span class="tag cat">${esc(CAT_NAMES[c] || c)}</span>`).join("");
-        const ver = a.version ? ` · v${esc(String(a.version).split(":")[0])}` : "";
+        const ver = a.version ? ` · v${esc(a.version)}` : "";
         const el = document.createElement("article");
         el.className = "product";
         el.innerHTML = `

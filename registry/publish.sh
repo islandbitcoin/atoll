@@ -84,7 +84,7 @@ if [ "${1:-}" = "add-package" ]; then
 fi
 
 # ── preflight ──────────────────────────────────────────────────────────────────────────
-for t in start-cli gh make python3; do
+for t in start-cli gh make python3 git; do
   command -v "$t" >/dev/null 2>&1 || die "missing required tool: $t"
 done
 [ -n "$DRY_RUN" ] || gh auth status >/dev/null 2>&1 || die "gh is not authenticated (run: gh auth login)"
@@ -150,7 +150,20 @@ for dir in "${PKG_DIRS[@]}"; do
   id="$(printf '%s' "$manifest"      | python3 -c 'import json,sys; print(json.load(sys.stdin)["id"])')"
   version="$(printf '%s' "$manifest" | python3 -c 'import json,sys; print(json.load(sys.stdin)["version"])')"
   notes="$(printf '%s' "$manifest"   | python3 -c 'import json,sys; rn=json.load(sys.stdin).get("releaseNotes"); print((rn.get("en_US") or next(iter(rn.values()),"")) if isinstance(rn,dict) else (rn or ""))')"
-  tag="v${version%%:*}"                    # 0.18.0:0 -> v0.18.0
+  # StartOS tags include the wrapper revision so different packages never share release assets.
+  case "$version" in
+    *:*) tag="v${version/:/_}" ;;
+    *)   tag="v${version}_0" ;;
+  esac
+  commit="$(printf '%s' "$manifest" | python3 -c 'import json, sys; print(json.load(sys.stdin)["gitHash"])')"
+  [[ "$commit" =~ ^[0-9a-f]{40}$ ]] || die "$id $version has no clean source commit"
+  for archive in "${s9pks[@]}"; do
+    start-cli s9pk inspect "$archive" manifest --format json | python3 -c '
+import json,sys
+m=json.load(sys.stdin)
+sys.exit(0 if [m["id"],m["version"],m["gitHash"]]==sys.argv[1:] else 1)
+' "$id" "$version" "$commit" || die "$archive does not match $id $version at $commit"
+  done
   # release repo: NAME from the dir's git remote (handles path != repo name, e.g.
   # packages/phoenix-startos -> phoenixd-startos), OWNER forced to RELEASE_OWNER.
   origin_url="$(git -C "$dir" remote get-url origin 2>/dev/null || true)"
@@ -159,6 +172,11 @@ for dir in "${PKG_DIRS[@]}"; do
   [ -n "$notes" ] || notes="$id $version"
 
   log "  id=$id  version=$version  tag=$tag  repo=$repo  archs=${#s9pks[@]}"
+
+  # Resolve annotated tags to the underlying commit as well as accepting lightweight tags.
+  tag_refs="$(git ls-remote "https://github.com/$repo.git" "refs/tags/$tag" "refs/tags/$tag^{}")" || die "could not check $repo $tag"
+  tag_commit="$(printf '%s\n' "$tag_refs" | awk 'NF == 2 {commit=$1} END {print commit}')"
+  [ -z "$tag_commit" ] || [ "$tag_commit" = "$commit" ] || die "$repo $tag already points to a different commit"
 
   # 2b. with FORCE, always remove first (don't trust the snapshot); else skip if already published
   if [ -n "$FORCE" ]; then
@@ -175,7 +193,7 @@ for dir in "${PKG_DIRS[@]}"; do
     log "  release $tag exists — replacing assets (--clobber)"
   else
     log "  creating release $tag"
-    run gh release create "$tag" --repo "$repo" --title "$id ${version%%:*}" --notes "$notes"
+    run gh release create "$tag" --repo "$repo" --target "$commit" --title "$id $version" --notes "$notes"
   fi
   run gh release upload "$tag" "${s9pks[@]}" --repo "$repo" --clobber
 

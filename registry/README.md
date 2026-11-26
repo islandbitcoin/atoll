@@ -57,6 +57,8 @@ public `start9.bobodread.com`.
 > no re-upload), so re-running `make publish` only publishes new or version-bumped packages.
 > Set `FORCE=1` to remove and re-add an existing version.
 
+Release tags include the StartOS wrapper revision (for example, `v0.2.2_2`). The publisher uses the source commit recorded in the package. Older unsuffixed tags still serve the original archives.
+
 ## Marketplace catalog (`packages.json`)
 
 The landing page (`docs/index.html`) renders its app grid from **`docs/packages.json`**, which is
@@ -124,3 +126,13 @@ rollback state and the reconstructed old package remain root-only on the tunnel
 host; the temporary rollback timer was cancelled after verification. The official
 stable APT repository now lists installed/candidate version 1.3.1. No reboot or
 Zion-wide gateway change occurred.
+
+## Maintained builds staged for import
+
+`imports.json` records the exact signed builds reviewed for Atoll, in upgrade order. Check the upstream registry still serves those builds with `python3 registry/check-imports.py`. This command reads the source registries. The existing marketplace catalog continues to reflect what Atoll actually serves.
+
+For Memos, make the 0.31.0 bridge available before the calendar-versioned release. A server on 0.29.1 must start the bridge successfully so the database migrates. Keep that bridge indexed for servers upgrading later.
+
+For phoenixd, take a StartOS backup of the existing wallet before upgrading directly from 0.8.0:0 to 0.9.2:4. The original Atoll archive fails to initialize on a fresh StartOS 0.4.3 install. The upgrade and restore test used the Community 0.8.0:0 archive with matching daemon and package scripts.
+
+After release approval, the registry operator can use `start-cli registry package promote <id> <version> --from <source-registry> --to <atoll-registry>` for each reviewed row, verify the destination commitments and sync the web catalog. Use the source archive directly to preserve its tested bytes and signatures.
