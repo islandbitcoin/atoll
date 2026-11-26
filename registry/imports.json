@@ -1,5 +1,24 @@
 [
   {
+    "package": "forgejo",
+    "version": "17.0.2:0",
+    "testedFrom": "15.0.3:0",
+    "registry": "https://registry.start9.com",
+    "commit": "5c5e4a5781d5bb34f44e0dc194100ba8378706fc",
+    "archives": {
+      "aarch64": {
+        "type": "merkle-archive",
+        "rootSighash": "jQqU+DdTe0f5cU5PQ7h7euHKbdBXvuFi7igyFBRvt6M",
+        "rootMaxsize": 504
+      },
+      "x86_64": {
+        "type": "merkle-archive",
+        "rootSighash": "40NBeBVjBqEBuZuT7S66bAqk4v7IetKJGcvQd6KjTtk",
+        "rootMaxsize": 504
+      }
+    }
+  },
+  {
     "package": "memos",
     "version": "0.31.0:3",
     "testedFrom": "0.29.1:0",
