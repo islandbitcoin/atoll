@@ -131,4 +131,6 @@ Zion-wide gateway change occurred.
 
 For Memos, make the 0.31.0 bridge available before the calendar-versioned release. A server on 0.29.1 must start the bridge successfully so the database migrates. Keep that bridge indexed for servers upgrading later.
 
+For phoenixd, take a StartOS backup of the existing wallet before upgrading directly from 0.8.0:0 to 0.9.2:4. The original Atoll archive fails to initialize on a fresh StartOS 0.4.3 install. The upgrade and restore test used the Community 0.8.0:0 archive with matching daemon and package scripts.
+
 After release approval, the registry operator can use `start-cli registry package promote <id> <version> --from <source-registry> --to <atoll-registry>` for each reviewed row, verify the destination commitments and sync the web catalog. Use the source archive directly to preserve its tested bytes and signatures.

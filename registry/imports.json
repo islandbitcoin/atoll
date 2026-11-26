@@ -55,5 +55,24 @@
         "rootMaxsize": 504
       }
     }
+  },
+  {
+    "package": "phoenixd",
+    "version": "0.9.2:4",
+    "testedFrom": "0.8.0:0",
+    "registry": "https://community-registry.start9.com",
+    "commit": "05f6390fbc120601a39c9122dbae75226869e2b2",
+    "archives": {
+      "aarch64": {
+        "type": "merkle-archive",
+        "rootSighash": "bENM3etlAi5SMq/ZSleYuCJBBY7lzVWb2ElT21mP3oA",
+        "rootMaxsize": 574
+      },
+      "x86_64": {
+        "type": "merkle-archive",
+        "rootSighash": "mbDdYd+MTwYyK+hJ4nvxv4gD894Asp/oZXe+QsLQt58",
+        "rootMaxsize": 574
+      }
+    }
   }
 ]
