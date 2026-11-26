@@ -1,93 +1,27 @@
-# atoll
+# Atoll
 
-Parent / meta repo that ties together **Island Bitcoin's community app stores** across both
-**Umbrel** and **Start9 (StartOS)**.
+Atoll is Island Bitcoin’s independent registry for StartOS and community app store for Umbrel. [Browse the Atoll catalog](https://islandbitcoin.github.io/atoll/) to see the available services, versions and supported platforms.
 
-It exists so that every app follows the same shared pattern and can be built and published
-from one place. Store id across both platforms: **`atoll`**; display name: **Island Bitcoin**.
+## Add Atoll to StartOS
 
-🌐 Landing page: served from [`docs/`](docs/) via GitHub Pages.
+1. On StartOS 0.4.2 or later, open **System → Registries → Add registry**.
+2. Enter `https://start9.bobodread.com` and add the registry.
+3. Open **Marketplace**, select **Atoll Registry** above the search field, then choose a service and select **Install**.
 
-## Layout
+When you add a registry, StartOS trusts newly offered keys for **Packages**. To check Atoll’s package-signing key, open **System → Registries**, open Atoll’s menu and select **Manage keys**. The **Dread** key has the following SHA-256 fingerprint.
 
-```
-atoll/
-├── docs/          # GitHub Pages landing page (apps + install instructions)
-├── umbrel/        # the single multi-app Umbrel community store (atoll-store)
-├── packages/      # one StartOS .s9pk builder per app (git submodules)
-│   ├── pact-startos/
-│   ├── kathreftestr-startos/
-│   ├── maple-proxy-startos/
-│   ├── phoenixd-startos/
-│   └── atoll-recovery-startos/
-├── registry/      # config + publish scripts for the Start9 Marketplace registry
-├── Makefile       # build-all / publish-all orchestration
-└── README.md
+```text
+SHA256:kDMXbVdasLTDl4qkaId2gdmJ087a1kTuTX0tYTK0IYc
 ```
 
-## The two platforms have different native models
+For help with an Atoll package, [open an issue with Island Bitcoin](https://github.com/islandbitcoin/atoll/issues). Start9’s [Marketplace guide](https://docs.start9.com/start-os/marketplace.html) explains registry and signer settings.
 
-This is the key thing to keep straight — they are **not** the same mechanism:
+## Add Atoll to Umbrel
 
-| | Umbrel | Start9 (v0.4.0 Marketplace) |
-|---|---|---|
-| What a "store" is | A **git repo** with `umbrel-app-store.yml` at the root and one subfolder per app | A **registry server** you host (here: on Zion at `start9.bobodread.com`) |
-| How apps are added | Subfolder `atoll-<appid>/` inside the one store repo | Publish each app's `.s9pk` into the registry |
-| How a user installs | Adds the store's git URL once → sees every app | Adds the registry URL once → sees every published app |
+Open **App Store → ⋯ → Add community store** and enter `https://github.com/islandbitcoin/atoll-store`. Open the **Island Bitcoin** store to choose an app.
 
-Consequence:
-- **Umbrel** → all apps in a *single* store repo (`atoll-store`, tracked under `umbrel/`). One repo, many apps.
-- **Start9** → keep one `.s9pk` *builder* per app under `packages/`; they all publish to the
-  one registry. There is no "merge" of builders — the registry is the store.
+## For maintainers
 
-## Adding a new app
-
-1. **Umbrel**: add a subfolder `atoll-<appid>/` to the `atoll-store` repo containing
-   `umbrel-app.yml`, `docker-compose.yml`, and `icon.svg`. The folder name MUST be
-   `atoll-<appid>` (store id is `atoll`), `id:` inside `umbrel-app.yml` must match the folder
-   name, and `APP_HOST` must be `atoll-<appid>_web_1`.
-2. **Start9**: create a `<app>-startos` builder repo (from the Start9 SDK template) and add
-   it here as a submodule under `packages/`.
-3. **Build & publish**: `make build` produces every `.s9pk`; `make publish` pushes them to
-   the registry at `start9.bobodread.com`.
-
-## Status (2026-06-16) — ✅ live in production
-
-- [x] Parent repo scaffolded
-- [x] Umbrel stores consolidated into the single `atoll-store` (id: atoll, "Island Bitcoin")
-- [x] Landing page added under `docs/`
-- [x] `atoll-store` pushed to GitHub and wired in as a submodule under `umbrel/`
-- [x] GitHub Pages enabled — https://islandbitcoin.github.io/atoll/
-- [x] Start9 registry `start9.bobodread.com` live on Zion (end users confirmed installing)
-- [x] `make publish` wired to the registry's publish command (`make sync` regenerates the marketplace catalog)
-- [x] 4 packages published & consistent: `pactd` 0.18.0, `kathreftestr` 0.1.1, `maple-proxy` 0.1.8, `phoenixd` 0.8.0
-
-Publishing/admin ops run on the registered-signer machine (MacMax) using the LAN signing-context
-workaround (`--registry-hostname embassy-5004a3db.local`); see [`registry/README.md`](registry/README.md).
-
-## Atoll Recovery prerelease
-
-Atoll Recovery copies encrypted Cashu ops backups to dedicated Nextcloud storage,
-verifies destination read-back and optionally sends HTTPS health notifications.
-It carries no recovery private identity or issuance authority. The ops-service
-will be packaged separately.
-
-Beta.5 is installed on Zion running StartOS 0.4.0.3 with setup retained.
-Its runner copied a real staging cron export into Nextcloud and verified
-read-back. An independent download matched the R2 ciphertext digest; isolated
-restoration recovered all escrow keys, retained the recovery fence, disabled
-operator credentials and omitted sessions. The temporary plaintext database
-was removed. The original 03:17 UTC nightly schedule is restored.
-
-The NTFY dependency supplied a scoped publisher automatically; its authenticated
-read-only subscription received failure and healthy transitions. Phone/desktop
-push, human acknowledgement, separate-machine recovery, offline key custody and
-a StartOS backup/restore round trip remain unverified. This is staging evidence.
-Beta.5 is indexed in the registry. The earlier GitHub fetch failure was isolated
-to the StartTunnel outbound route: import passed on wired egress, then passed
-on the original tunnel route after upgrading its server from 0.4.0-alpha.15 to
-1.3.1. Zion initially received beta.5 by sideload.
-See [the package instructions](https://github.com/islandbitcoin/atoll-recovery-startos/blob/main/instructions.md).
-
-Publish only its reviewed, locally signed release assets to the registry; the
-GitHub build workflow creates test artifacts and holds no registry signing key.
+- **StartOS packages.** The [registry guide](registry/README.md) covers building and signing a package locally, importing a reviewed build from another registry, and refreshing the catalog with `make sync`.
+- **Umbrel apps.** Each app has its own directory in the [Atoll store repository](https://github.com/islandbitcoin/atoll-store).
+- **Atoll Recovery.** Use the [package instructions](https://github.com/islandbitcoin/atoll-recovery-startos/blob/main/instructions.md) for setup and recovery. The [beta.5 staging notes](https://github.com/islandbitcoin/atoll/blob/8570d9543175f7b299b9d8f8e326e2d2472da29b/README.md#atoll-recovery-prerelease) record what that release tested.
