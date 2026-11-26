@@ -74,5 +74,24 @@
         "rootMaxsize": 574
       }
     }
+  },
+  {
+    "package": "maple-proxy",
+    "version": "0.4.2:1",
+    "testedFrom": "0.1.8:1",
+    "registry": "https://community-registry.start9.com",
+    "commit": "382f220476e7d443a24f340a331d6441f210ead5",
+    "archives": {
+      "aarch64": {
+        "type": "merkle-archive",
+        "rootSighash": "LSZsUpBHqWLELwEAPZoUF3FQSFAv7yTCO1uf45XS4PQ",
+        "rootMaxsize": 504
+      },
+      "x86_64": {
+        "type": "merkle-archive",
+        "rootSighash": "SjsYFiteLdvMShqoacvbW6yo7iCtTe8rNCfxCPEkXyA",
+        "rootMaxsize": 504
+      }
+    }
   }
 ]
