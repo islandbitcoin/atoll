@@ -23,14 +23,14 @@
     {
       "id": "beszel",
       "name": "Beszel",
-      "description": "Lightweight server monitoring with Docker stats, historical data, and alerts.",
-      "version": "0.9.1:5",
+      "description": "Lightweight monitoring hub for your servers, with metric history and alerts.",
+      "version": "0.21.2:2",
       "categories": [
         "files-and-productivity"
       ],
       "icon": "blake3/xs67gvmab3cuisyiluak7v376awalqbnkvxynrc3bxeaaw3g42eq.svg",
       "site": "https://beszel.dev/",
-      "source": "https://github.com/islandbitcoin/beszel-startos",
+      "source": "https://github.com/Start9-Community/beszel-startos",
       "platforms": [
         "start9",
         "umbrel"
@@ -39,12 +39,12 @@
     {
       "id": "forgejo",
       "name": "Forgejo",
-      "description": "Your Forgejo Git server",
-      "version": "15.0.3:0",
+      "description": "A painless self-hosted Git service",
+      "version": "17.0.2:0",
       "categories": [
         "files-and-productivity"
       ],
-      "icon": "blake3/473pohnr4iaifatyy2aizhcjjuxe3txgompdbqj6egqbwkl6xlfq.svg",
+      "icon": "blake3/26xrnab7bc2ma7jl6psswhe7qxirbm4cse7xj436mwhq7dft4mea.svg",
       "site": "https://forgejo.org/",
       "source": "https://github.com/Start9Labs/forgejo-startos",
       "platforms": [
@@ -55,13 +55,13 @@
       "id": "kathreftestr",
       "name": "Kathreftestr",
       "description": "Mirror a livestream to Nostr (NIP-53), with Lightning zaps",
-      "version": "0.1.2:0",
+      "version": "0.1.2:1",
       "categories": [
         "media"
       ],
       "icon": "blake3/u3jt6zrq56xi7dde54ig3iqj3uawc7u7bpebxehzojsdmel6u53a.svg",
       "site": "https://bobodread876.github.io/kathreftestr/",
-      "source": "https://github.com/bobodread876/kathreftestr",
+      "source": "https://github.com/islandbitcoin/kathreftestr-startos",
       "platforms": [
         "start9",
         "umbrel"
@@ -71,7 +71,7 @@
       "id": "lightning-server",
       "name": "Lightning Server",
       "description": "Self-hosted Lightning Address server with Nostr zap receipts and payment notifications.",
-      "version": "0.2.2:1",
+      "version": "0.2.2:2",
       "categories": [
         "lighting"
       ],
@@ -87,13 +87,13 @@
       "id": "maple-proxy",
       "name": "Maple Proxy",
       "description": "OpenAI-compatible proxy for Maple TEE infrastructure",
-      "version": "0.1.8:1",
+      "version": "0.4.2:1",
       "categories": [
         "ai"
       ],
       "icon": "blake3/kofbdfiinghvbxzvbf37gbigfucm7oihrtwsurnpeslt5czdbq2a.png",
       "site": "https://trymaple.ai/",
-      "source": "https://github.com/islandbitcoin/maple-proxy-startos",
+      "source": "https://github.com/Start9-Community/maple-proxy-startos",
       "platforms": [
         "start9"
       ]
@@ -101,14 +101,14 @@
     {
       "id": "memos",
       "name": "Memos",
-      "description": "Privacy-first, lightweight note-taking service",
-      "version": "0.29.1:0",
+      "description": "Self-hosted, lightweight note-taking service. Markdown-native, SQLite-backed, and fully yours.",
+      "version": "26.11.2:0",
       "categories": [
         "files-and-productivity"
       ],
-      "icon": "blake3/bfjonfpyhajceekznfzyusewdcp5ob7tcpgsqcfbbbz2hxwsalsa.svg",
+      "icon": "blake3/ywzxfe364gg64semvbpric7k7jy4tk5my5x3tlxg7jhugnuyuqza.png",
       "site": "https://usememos.com/",
-      "source": "https://github.com/islandbitcoin/memos-startos",
+      "source": "https://github.com/Start9Labs/memos-startos",
       "platforms": [
         "start9"
       ]
@@ -117,7 +117,7 @@
       "id": "nutcracker",
       "name": "Nutcracker",
       "description": "Nutshell, cracked open: a Cashu eCash mint with phoenixd and onchain",
-      "version": "0.22.1:2",
+      "version": "0.22.1:6",
       "categories": [],
       "icon": "blake3/nr3nvnhukuli6ld5yjs2hlfbmblk6ypzxvn26uvyn3ijeq4vj7cq.png",
       "site": "https://cashu.space/",
@@ -147,7 +147,7 @@
       "id": "paseo",
       "name": "Paseo",
       "description": "Run coding agents on your server, from anywhere",
-      "version": "0.11.2:0",
+      "version": "0.17.5:0",
       "categories": [],
       "icon": "blake3/35tzwspmkrf7z4drptqup2vvp4aybdr54eaetepnoflwxy5gqp3a.svg",
       "site": "https://paseo.sh/",
@@ -160,7 +160,7 @@
       "id": "phoenixd",
       "name": "phoenixd",
       "description": "Lightning backend for Phoenix Wallet",
-      "version": "0.8.0:0",
+      "version": "0.9.2:4",
       "categories": [],
       "icon": "blake3/tubcpx4o4egou5a5xok32pfm3tydcqksqlwjnut3v62imi64ygoa.svg",
       "site": "https://phoenix.acinq.co/server/",
