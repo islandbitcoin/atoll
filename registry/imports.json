@@ -1,0 +1,59 @@
+[
+  {
+    "package": "memos",
+    "version": "0.31.0:3",
+    "testedFrom": "0.29.1:0",
+    "registry": "https://registry.start9.com",
+    "commit": "ed59ebcd94d3f7d984aa3574f48af74593413e48",
+    "archives": {
+      "aarch64": {
+        "type": "merkle-archive",
+        "rootSighash": "Gh70Zof6voWXBpMeRIGi5yjg6rRKgn0HuI3VSbCRpmc",
+        "rootMaxsize": 504
+      },
+      "x86_64": {
+        "type": "merkle-archive",
+        "rootSighash": "X5X13xNubsHKThZqviCo3PHVyFqrqfayoGYynt+8v/I",
+        "rootMaxsize": 504
+      }
+    }
+  },
+  {
+    "package": "memos",
+    "version": "26.11.2:0",
+    "testedFrom": "0.31.0:3",
+    "registry": "https://registry.start9.com",
+    "commit": "2a3bc839066c0a706f478e64a6e899fe80d407ed",
+    "archives": {
+      "aarch64": {
+        "type": "merkle-archive",
+        "rootSighash": "ECS+4i4lJ48Nka+xT3ma2ap14crt7igWtW3n51nzB98",
+        "rootMaxsize": 504
+      },
+      "x86_64": {
+        "type": "merkle-archive",
+        "rootSighash": "7RIeYsexZ+X5wDUsJtvRPSIvcHoBjFlAVhlHdrpvB5M",
+        "rootMaxsize": 504
+      }
+    }
+  },
+  {
+    "package": "beszel",
+    "version": "0.21.2:2",
+    "testedFrom": "0.9.1:5",
+    "registry": "https://community-registry.start9.com",
+    "commit": "25055eefa8e1032398229cffd2133389f0bab3fc",
+    "archives": {
+      "aarch64": {
+        "type": "merkle-archive",
+        "rootSighash": "bw5mJk7MX1oGmTZI3G3aEkHeer+drY6DNLR7FsjUT+M",
+        "rootMaxsize": 504
+      },
+      "x86_64": {
+        "type": "merkle-archive",
+        "rootSighash": "XAnBVesa8zqD6CJCUzw+2UkiM9xg7R77S4u6Hyq06jA",
+        "rootMaxsize": 504
+      }
+    }
+  }
+]
