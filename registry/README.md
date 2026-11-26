@@ -124,3 +124,11 @@ rollback state and the reconstructed old package remain root-only on the tunnel
 host; the temporary rollback timer was cancelled after verification. The official
 stable APT repository now lists installed/candidate version 1.3.1. No reboot or
 Zion-wide gateway change occurred.
+
+## Maintained builds staged for import
+
+`imports.json` records the exact signed builds reviewed for Atoll, in upgrade order. Check the upstream registry still serves those builds with `python3 registry/check-imports.py`. This command reads the source registries. The existing marketplace catalog continues to reflect what Atoll actually serves.
+
+For Memos, make the 0.31.0 bridge available before the calendar-versioned release. A server on 0.29.1 must start the bridge successfully so the database migrates. Keep that bridge indexed for servers upgrading later.
+
+After release approval, the registry operator can use `start-cli registry package promote <id> <version> --from <source-registry> --to <atoll-registry>` for each reviewed row, verify the destination commitments and sync the web catalog. Use the source archive directly to preserve its tested bytes and signatures.
